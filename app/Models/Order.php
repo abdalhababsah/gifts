@@ -15,6 +15,8 @@ class Order extends Model
         'total_amount',
         'shipping_address',
         'city_id',
+        'delivery_date',
+        'delivery_time_slot_id',
         'is_gift',
         'receiver_name',
         'receiver_phone',
@@ -27,6 +29,7 @@ class Order extends Model
     {
         return [
             'total_amount' => 'decimal:2',
+            'delivery_date' => 'date',
             'is_gift' => 'boolean',
             'is_anonymous_delivery' => 'boolean',
         ];
@@ -46,6 +49,14 @@ class Order extends Model
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
+    }
+
+    /**
+     * Get the delivery time slot for this order.
+     */
+    public function deliveryTimeSlot(): BelongsTo
+    {
+        return $this->belongsTo(DeliveryTimeSlot::class);
     }
 
     /**

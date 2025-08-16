@@ -29,9 +29,13 @@ return new class extends Migration
             $table->text('location_description')->nullable()->comment('Landmarks / directions');
             $table->text('extra_notes')->nullable()->comment('Any extra notes from buyer');
             $table->boolean('is_anonymous_delivery')->default(false);
+            $table->date('delivery_date')->after('city_id');
+            $table->unsignedBigInteger('delivery_time_slot_id')->after('delivery_date');
 
+            // Foreign key constraint
             $table->timestamps();
-
+            
+            $table->foreign('delivery_time_slot_id')->references('id')->on('delivery_time_slots')->onDelete('restrict');
             // Foreign keys
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('restrict');
