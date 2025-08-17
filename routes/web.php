@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -44,6 +45,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::patch('/{brand}/toggle-status', [BrandController::class, 'toggleStatus'])->name('toggleStatus');
             Route::get('/select/options', [BrandController::class, 'getForSelect'])->name('select');
         });
+
+            Route::resource('products', ProductController::class)->names('products');
+            Route::patch('products/{product}/toggle-status', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
+            Route::get('products-for-select', [ProductController::class, 'getForSelect'])->name('products.getForSelect');
     });
 });
 

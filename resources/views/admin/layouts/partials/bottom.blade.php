@@ -21,6 +21,10 @@
 <!-- Custom Status Toggle JS -->
 <script src="{{ asset('admin/assets/js/status-toggle.js') }}"></script>
 
+<script src="{{ asset('admin/assets/js/common.js') }}"></script>
+
+<script src="{{ asset('admin/assets/libs/dropzone/dropzone-min.js') }}"></script>
+
 @stack('scripts')
 
 </html>

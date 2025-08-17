@@ -21,7 +21,7 @@
     <!-- Icons CSS -->
 
     <!-- Tailwind CSS -->
-
+    <link rel="stylesheet" href="{{ asset('admin/assets/libs/dropzone/basic.css') }}">
 
     <link rel="stylesheet" href="{{ asset('admin/assets/css/tailwind2.css') }}">
 </head>

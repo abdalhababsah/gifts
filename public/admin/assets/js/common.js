@@ -237,3 +237,94 @@ window.addEventListener('click', function (e) {
 });
 
 
+/**
+ * Common utility functions for the admin panel
+ */
+
+// Function to show validation alerts using the Alert component style
+function showValidationAlert(message) {
+    // Create alert element using the Alert component structure
+    const alertContainer = document.createElement('div');
+    alertContainer.innerHTML = `
+        <div class="p-3 mb-3 text-base border rounded-md transition-all duration-300 text-yellow-500 border-yellow-200 bg-yellow-50 dark:bg-yellow-400/20 dark:border-yellow-500/50" role="alert" id="alert-${Date.now()}">
+            <div class="flex items-start">
+                <div class="flex-shrink-0 mx-1">
+                    <i data-lucide="alert-triangle" class="size-5"></i>
+                </div>
+                <div class="flex-1">
+                    ${message}
+                </div>
+                <button type="button" onclick="dismissAlert(this)" class="flex-shrink-0 ml-3 text-current opacity-70 hover:opacity-100 transition-opacity" aria-label="Close">
+                    <i data-lucide="x" class="size-4"></i>
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Insert the alert at the top of the form
+    const form = document.getElementById('productForm');
+    if (form) {
+        form.parentNode.insertBefore(alertContainer.firstElementChild, form);
+        
+        // Initialize the Lucide icons in the alert
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+        
+        // Scroll to the alert
+        window.scrollTo({
+            top: alertContainer.firstElementChild.offsetTop - 100,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// Function to show error alerts using the Alert component style
+function showErrorAlert(message) {
+    // Create alert element using the Alert component structure
+    const alertContainer = document.createElement('div');
+    alertContainer.innerHTML = `
+        <div class="p-3 mb-3 text-base border rounded-md transition-all duration-300 text-red-500 border-red-200 bg-red-50 dark:bg-red-400/20 dark:border-red-500/50" role="alert" id="alert-${Date.now()}">
+            <div class="flex items-start">
+                <div class="flex-shrink-0 mx-1">
+                    <i data-lucide="alert-circle" class="size-5"></i>
+                </div>
+                <div class="flex-1">
+                    ${message}
+                </div>
+                <button type="button" onclick="dismissAlert(this)" class="flex-shrink-0 ml-3 text-current opacity-70 hover:opacity-100 transition-opacity" aria-label="Close">
+                    <i data-lucide="x" class="size-4"></i>
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Insert the alert at the top of the form
+    const form = document.getElementById('productForm');
+    if (form) {
+        form.parentNode.insertBefore(alertContainer.firstElementChild, form);
+        
+        // Initialize the Lucide icons in the alert
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+        
+        // Scroll to the alert
+        window.scrollTo({
+            top: alertContainer.firstElementChild.offsetTop - 100,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// Function to dismiss alerts (copied from the Alert component)
+function dismissAlert(button) {
+    const alert = button.closest('[role="alert"]');
+    if (alert) {
+        alert.style.opacity = '0';
+        alert.style.transform = 'translateX(100%)';
+        setTimeout(function() {
+            alert.remove();
+        }, 300);
+    }
+}
