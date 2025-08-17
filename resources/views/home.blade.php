@@ -1,1728 +1,618 @@
 <!DOCTYPE html>
-<html lang="en" class="light scroll-smooth group" data-layout="vertical" data-sidebar="light" data-sidebar-size="lg"
-    data-mode="light" data-topbar="light" data-skin="default" data-navbar="sticky" data-content="fluid" dir="ltr">
+<html lang="en" class="overflow-x-hidden scroll-smooth group" data-mode="light" dir="ltr">
 
 <head>
-
     <meta charset="utf-8">
-    <title>Ecommerce | Tailwick - Admin & Dashboard Template</title>
+    <title>GiftShop - Perfect Gifts for Every Occasion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta content="Minimal Admin & Dashboard Template" name="description">
-    <meta content="Themesdesign" name="author">
+    <meta content="GiftShop Mobile App - Find Perfect Gifts" name="description">
+    <meta content="GiftShop" name="author">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
-    <!-- Layout config Js -->
-    <script src="{{ asset('admin/assets/js/layout.js') }}"></script>
-    <!-- Icons CSS -->
-
+    <link rel="shortcut icon" href="./assets/images/favicon.ico">
+    
     <!-- Tailwind CSS -->
-
-
-    <link rel="stylesheet" href="{{ asset('admin/assets/css/tailwind2.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        custom: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a'
+                        },
+                        zink: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
-<body
-    class="text-base bg-body-bg text-body font-public dark:text-zink-100 dark:bg-zink-800 group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
-    <div class="group-data-[sidebar-size=sm]:min-h-sm group-data-[sidebar-size=sm]:relative">
+<body class="text-base bg-white text-body font-sans dark:text-zink-50 dark:bg-zink-800">
 
-
-   @include('admin.layouts.sidebar')
-        <!-- Left Sidebar End -->
-        <div id="sidebar-overlay" class="absolute inset-0 z-[1002] bg-slate-500/30 hidden"></div>
-   
-        @include('admin.layouts.header')
-
-
-
-        <div class="relative min-h-screen group-data-[sidebar-size=sm]:min-h-sm">
-
-            <div
-                class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
-                <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
-
-                    <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
-                        <div class="grow">
-                            <h5 class="text-16">Ecommerce</h5>
-                        </div>
-                        <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
-                            <li
-                                class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                                <a href="#!" class="text-slate-400 dark:text-zink-200">Dashboards</a>
-                            </li>
-                            <li class="text-slate-700 dark:text-zink-100">
-                                Ecommerce
-                            </li>
-                        </ul>
+    <nav class="fixed inset-x-0 top-0 z-50 flex items-center justify-center h-20 py-3 bg-white/80 backdrop-blur-lg dark:bg-zink-700/80 border-b border-slate-200 dark:border-zink-500 shadow-lg shadow-slate-200/25 dark:shadow-zink-500/30" id="navbar">
+        <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto flex items-center self-center w-full">
+            <div class="shrink-0">
+                <a href="#!" class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-custom-500 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
+                        </svg>
                     </div>
-                    <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5">
-                        <div class="relative col-span-12 overflow-hidden card 2xl:col-span-8 bg-slate-900">
-                            <div class="absolute inset-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="size-100" version="1.1"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs"
-                                    width="1440" height="560" preserveAspectRatio="none"
-                                    viewBox="0 0 1440 560">
-                                    <g mask="url(&quot;#SvgjsMask1000&quot;)" fill="none">
-                                        <use xlink:href="#SvgjsSymbol1007" x="0" y="0"></use>
-                                        <use xlink:href="#SvgjsSymbol1007" x="720" y="0"></use>
-                                    </g>
-                                    <defs>
-                                        <mask id="SvgjsMask1000">
-                                            <rect width="1440" height="560" fill="#ffffff"></rect>
-                                        </mask>
-                                        <path d="M-1 0 a1 1 0 1 0 2 0 a1 1 0 1 0 -2 0z" id="SvgjsPath1003"></path>
-                                        <path d="M-3 0 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0z" id="SvgjsPath1004"></path>
-                                        <path d="M-5 0 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0z" id="SvgjsPath1001"></path>
-                                        <path d="M2 -2 L-2 2z" id="SvgjsPath1005"></path>
-                                        <path d="M6 -6 L-6 6z" id="SvgjsPath1002"></path>
-                                        <path d="M30 -30 L-30 30z" id="SvgjsPath1006"></path>
-                                    </defs>
-                                    <symbol id="SvgjsSymbol1007">
-                                        <use xlink:href="#SvgjsPath1001" x="30" y="30" stroke="rgba(32, 43, 61, 1)">
-                                        </use>
-                                        <use xlink:href="#SvgjsPath1002" x="30" y="90" stroke="rgba(32, 43, 61, 1)">
-                                        </use>
-                                        <use xlink:href="#SvgjsPath1001" x="30" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1003" x="30" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="30" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="30" y="330"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="30" y="390"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1003" x="30" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="30" y="510"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="30" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="90" y="30" stroke="rgba(32, 43, 61, 1)">
-                                        </use>
-                                        <use xlink:href="#SvgjsPath1003" x="90" y="90" stroke="rgba(32, 43, 61, 1)">
-                                        </use>
-                                        <use xlink:href="#SvgjsPath1001" x="90" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="90" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1004" x="90" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1003" x="90" y="330"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="90" y="390"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="90" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="90" y="510"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="90" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="150" y="30"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="150" y="90"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="150" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="150" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="150" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="150" y="330"
-                                            stroke="rgba(32, 43, 61, 1)" stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1004" x="150" y="390"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="150" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="150" y="510"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="150" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="210" y="30"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="210" y="90"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="210" y="150"
-                                            stroke="rgba(32, 43, 61, 1)" stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="210" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="210" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="210" y="330"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="210" y="390"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="210" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="210" y="510"
-                                            stroke="rgba(32, 43, 61, 1)" stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1003" x="210" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="270" y="30"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="270" y="90"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="270" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="270" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="270" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="270" y="330"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="270" y="390"
-                                            stroke="rgba(32, 43, 61, 1)" stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="270" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="270" y="510"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="270" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="330" y="30"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="330" y="90" stroke="rgba(32, 43, 61, 1)"
-                                            stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="330" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="330" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="330" y="270"
-                                            stroke="rgba(32, 43, 61, 1)" stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="330" y="330"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="330" y="390"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="330" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1003" x="330" y="510"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="330" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1004" x="390" y="30"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="390" y="90"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="390" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="390" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="390" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="390" y="330"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="390" y="390"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1003" x="390" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="390" y="510"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="390" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="450" y="30"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1004" x="450" y="90"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="450" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="450" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="450" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="450" y="330"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="450" y="390"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="450" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="450" y="510"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="450" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="510" y="30"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1003" x="510" y="90"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="510" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="510" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="510" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1004" x="510" y="330"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="510" y="390"
-                                            stroke="rgba(32, 43, 61, 1)" stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="510" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="510" y="510"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="510" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="570" y="30"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="570" y="90"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="570" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="570" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="570" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="570" y="330"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="570" y="390"
-                                            stroke="rgba(32, 43, 61, 1)" stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="570" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="570" y="510"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="570" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="630" y="30"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="630" y="90"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="630" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="630" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="630" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="630" y="330"
-                                            stroke="rgba(32, 43, 61, 1)" stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="630" y="390"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="630" y="450"
-                                            stroke="rgba(32, 43, 61, 1)" stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="630" y="510"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="630" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="690" y="30"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="690" y="90"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="690" y="150"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1002" x="690" y="210"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1005" x="690" y="270"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1001" x="690" y="330"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1003" x="690" y="390"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1003" x="690" y="450"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                        <use xlink:href="#SvgjsPath1006" x="690" y="510"
-                                            stroke="rgba(32, 43, 61, 1)" stroke-width="3"></use>
-                                        <use xlink:href="#SvgjsPath1003" x="690" y="570"
-                                            stroke="rgba(32, 43, 61, 1)"></use>
-                                    </symbol>
-                                </svg>
-                            </div>
-                            <div class="relative card-body">
-                                <div class="grid items-center grid-cols-12">
-                                    <div class="col-span-12 lg:col-span-8 2xl:col-span-7">
-                                        <h5 class="mb-3 font-normal tracking-wide text-slate-200">Welcome Paula Keenan
-                                            🎉</h5>
-                                        <p class="mb-5 text-slate-400">An ecommerce dashboard has just that purpose.
-                                            It provides your ecommerce team with a clear overview of key financial and
-                                            website KPIs at any time.</p>
-                                        <button type="button"
-                                            class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-500/20 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-500/20 dark:ring-custom-400/20">Take
-                                            a Product</button>
-                                    </div>
-                                    <div
-                                        class="hidden col-span-12 2xl:col-span-3 lg:col-span-2 lg:col-start-11 2xl:col-start-10 lg:block">
-                                        <img src="{{ asset('admin/assets/images/dashboard.png') }}" alt=""
-                                            class="h-40 ltr:2xl:ml-auto rtl:2xl:mr-auto">
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 card 2xl:col-span-4 2xl:row-span-2">
-                            <div class="card-body">
-                                <div class="flex items-center mb-3">
-                                    <h6 class="grow text-15">Order Statistics</h6>
-                                    <div class="relative">
-                                        <a href="#!"
-                                            class="underline transition-all duration-200 ease-linear text-custom-500 hover:text-custom-600">View
-                                            All <i data-lucide="move-right"
-                                                class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1"></i></a>
-                                    </div>
-                                </div>
-                                <div id="orderStatisticsChart" class="apex-charts"
-                                    data-chart-colors='["bg-purple-500", "bg-sky-500"]' dir="ltr"></div>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
-                            <div class="text-center card-body">
-                                <div
-                                    class="flex items-center justify-center mx-auto rounded-full size-14 bg-custom-100 text-custom-500 dark:bg-custom-500/20">
-                                    <i data-lucide="wallet-2"></i>
-                                </div>
-                                <h5 class="mt-4 mb-2">$<span class="counter-value" data-target="236.18">0</span>k
-                                </h5>
-                                <p class="text-slate-500 dark:text-zink-200">Total Revenue</p>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
-                            <div class="text-center card-body">
-                                <div
-                                    class="flex items-center justify-center mx-auto text-purple-500 bg-purple-100 rounded-full size-14 dark:bg-purple-500/20">
-                                    <i data-lucide="package"></i>
-                                </div>
-                                <h5 class="mt-4 mb-2"><span class="counter-value" data-target="13461">0</span>
-                                </h5>
-                                <p class="text-slate-500 dark:text-zink-200">Total Orders</p>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
-                            <div class="text-center card-body">
-                                <div
-                                    class="flex items-center justify-center mx-auto text-green-500 bg-green-100 rounded-full size-14 dark:bg-green-500/20">
-                                    <i data-lucide="truck"></i>
-                                </div>
-                                <h5 class="mt-4 mb-2"><span class="counter-value" data-target="17150">0</span>
-                                </h5>
-                                <p class="text-slate-500 dark:text-zink-200">Delivered</p>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
-                            <div class="text-center card-body">
-                                <div
-                                    class="flex items-center justify-center mx-auto text-red-500 bg-red-100 rounded-full size-14 dark:bg-red-500/20">
-                                    <i data-lucide="package-x"></i>
-                                </div>
-                                <h5 class="mt-4 mb-2"><span class="counter-value" data-target="3519">0</span></h5>
-                                <p class="text-slate-500 dark:text-zink-200">Cancelled</p>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 card 2xl:col-span-8">
-                            <div class="card-body">
-                                <div class="flex flex-col gap-4 mb-4 md:mb-3 md:items-center md:flex-row">
-                                    <h6 class="grow text-15">Sales Revenue Overview</h6>
-                                    <div class="relative">
-                                        <i data-lucide="calendar-range"
-                                            class="absolute size-4 ltr:left-3 rtl:right-3 top-3 text-slate-500 dark:text-zink-200"></i>
-                                        <input type="text"
-                                            class="ltr:pl-10 rtl:pr-10 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                            data-provider="flatpickr" data-date-format="d M, Y"
-                                            data-range-date="true" readonly="readonly" placeholder="Select Date">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-12 gap-4 mb-3">
-                                    <div class="col-span-12 md:col-span-6 lg:col-span-3">
-                                        <div class="flex items-center gap-3">
-                                            <div
-                                                class="flex items-center justify-center rounded-md size-12 text-sky-500 bg-sky-50 shrink-0 dark:bg-sky-500/10">
-                                                <i data-lucide="bar-chart"></i>
-                                            </div>
-                                            <div class="grow">
-                                                <p class="mb-1 text-slate-500 dark:text-zink-200">Total Sales</p>
-                                                <h5 class="text-15">$<span class="counter-value"
-                                                        data-target="1517.36">0</span>k</h5>
+                    <span class="text-xl font-bold text-slate-800 dark:text-zink-50">GiftShop</span>
+                </a>
+            </div>
+            <div class="mx-auto">
+                <ul class="hidden md:flex items-center space-x-8">
+                    <li>
+                        <a href="#home" class="text-slate-800 hover:text-custom-500 dark:text-zink-100 dark:hover:text-custom-500 font-medium transition-all duration-300 ease-linear">Home</a>
+                    </li>
+                    <li>
+                        <a href="#features" class="text-slate-800 hover:text-custom-500 dark:text-zink-100 dark:hover:text-custom-500 font-medium transition-all duration-300 ease-linear">Features</a>
+                    </li>
+                    <li>
+                        <a href="#about" class="text-slate-800 hover:text-custom-500 dark:text-zink-100 dark:hover:text-custom-500 font-medium transition-all duration-300 ease-linear">About</a>
+                    </li>
+                    <li>
+                        <a href="#download" class="text-slate-800 hover:text-custom-500 dark:text-zink-100 dark:hover:text-custom-500 font-medium transition-all duration-300 ease-linear">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative pb-36 pt-44" id="home">
+        <div class="absolute rotate-45 border border-dashed size-[500px] border-t-slate-300 dark:border-t-zink-500 border-l-slate-300 dark:border-l-zink-500 border-r-slate-700 dark:border-r-zink-400 border-b-slate-700 dark:border-b-zink-400 -bottom-[250px] rounded-full ltr:right-40 rtl:left-40 z-10 hidden lg:block"></div>
+        <div class="absolute rotate-45 border border-dashed size-[700px] border-t-slate-300 dark:border-t-zink-500 border-l-slate-300 dark:border-l-zink-500 border-r-slate-700 dark:border-r-zink-400 border-b-slate-700 dark:border-b-zink-400 -bottom-[350px] rounded-full ltr:right-16 rtl:left-16 z-10 hidden 2xl:block"></div>
+        <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
+            <div class="grid grid-cols-12 items-center">
+                <div class="col-span-12 lg:col-span-6">
+                    <h1 class="mb-8 text-4xl md:text-5xl !leading-relaxed font-bold text-slate-800 dark:text-zink-50">
+                        Find Perfect Gifts with 
+                        <span class="relative inline-block px-2 mx-2 before:block before:absolute before:-inset-1 before:-skew-y-6 before:bg-sky-50 dark:before:bg-sky-500/20 before:rounded-md before:backdrop-blur-xl">
+                            <span class="relative text-sky-500">GiftShop</span>
+                        </span>
+                        Mobile App
+                    </h1>
+                    <p class="mb-6 text-lg text-slate-500 dark:text-zink-200">
+                        Discover thousands of unique gifts, personalized recommendations, and seamless shopping experience right at your fingertips. Make every occasion special with our curated collection.
+                    </p>
+                    <div class="flex items-center gap-4 flex-wrap">
+                        <button type="button" class="py-3 px-6 text-white bg-custom-500 border-custom-500 hover:bg-custom-600 hover:border-custom-600 focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:bg-custom-600 active:border-custom-600 rounded-lg transition-all duration-300 flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                            </svg>
+                            <span>Download App</span>
+                        </button>
+                        <button type="button" class="py-3 px-6 text-slate-600 bg-white border-slate-300 hover:bg-slate-50 hover:border-slate-400 focus:bg-slate-50 focus:border-slate-400 rounded-lg transition-all duration-300 flex items-center space-x-2 dark:bg-zink-700 dark:text-zink-200 dark:border-zink-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h6m2-7a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>View Demo</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-span-12 lg:col-span-6 mt-12 lg:mt-0">
+                    <div class="relative flex justify-center">
+                        <!-- Phone Mockup -->
+                        <div class="relative">
+                            <div class="w-80 h-[600px] bg-slate-900 rounded-[3rem] p-4 shadow-2xl">
+                                <div class="w-full h-full bg-white rounded-[2.5rem] overflow-hidden">
+                                    <!-- Phone Screen Content -->
+                                    <div class="h-full bg-gradient-to-br from-slate-50 to-slate-100 p-6 flex flex-col">
+                                        <!-- Status Bar -->
+                                        <div class="flex justify-between items-center mb-8 pt-4">
+                                            <span class="text-sm font-medium">9:41</span>
+                                            <div class="flex space-x-1">
+                                                <div class="w-4 h-2 bg-slate-300 rounded-full"></div>
+                                                <div class="w-4 h-2 bg-slate-300 rounded-full"></div>
+                                                <div class="w-4 h-2 bg-custom-500 rounded-full"></div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-span-12 md:col-span-6 lg:col-span-3">
-                                        <div class="flex items-center gap-3">
-                                            <div
-                                                class="flex items-center justify-center text-green-500 rounded-md size-12 bg-green-50 shrink-0 dark:bg-green-500/10">
-                                                <i data-lucide="trending-up"></i>
+                                        
+                                        <!-- App Header -->
+                                        <div class="text-center mb-8">
+                                            <div class="w-16 h-16 bg-custom-500 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
+                                                </svg>
                                             </div>
-                                            <div class="grow">
-                                                <p class="mb-1 text-slate-500 dark:text-zink-200">Total Profit</p>
-                                                <h5 class="text-15">$<span class="counter-value"
-                                                        data-target="746.84">0</span>k</h5>
-                                            </div>
+                                            <h3 class="text-xl font-bold text-slate-800">GiftShop</h3>
+                                            <p class="text-slate-500 text-sm">Perfect gifts await</p>
                                         </div>
-                                    </div>
-                                </div>
-                                <div id="salesRevenueOverview" class="apex-charts"
-                                    data-chart-colors='["bg-custom-500", "bg-custom-400", "bg-custom-300"]'
-                                    dir="ltr"></div>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 2xl:col-span-4">
-                            <div class="grid grid-cols-12 gap-x-5">
-                                <div class="col-span-12 card lg:col-span-6 2xl:col-span-12">
-                                    <div class="card-body">
-                                        <div class="flex items-center mb-3">
-                                            <h6 class="grow text-15">Traffic Resources</h6>
-                                            <div class="relative">
-                                                <a href="#!"
-                                                    class="transition-all duration-300 ease-linear text-custom-500 hover:text-custom-700">View
-                                                    Status <i data-lucide="move-right"
-                                                        class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1"></i></a>
+                                        
+                                        <!-- Feature Cards -->
+                                        <div class="space-y-4 flex-1">
+                                            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+                                                <div class="flex items-center space-x-3">
+                                                    <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                                                        <svg class="w-5 h-5 text-sky-500" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <h4 class="font-medium text-slate-800">Gift Collections</h4>
+                                                        <p class="text-slate-500 text-sm">Curated for you</p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="grid grid-cols-12">
-                                            <div class="col-span-12 md:col-span-6 2xl:col-span-7">
-                                                <div id="trafficResourcesChart" class="apex-charts"
-                                                    data-chart-colors='["bg-sky-500", "bg-purple-500", "bg-green-500", "bg-yellow-500"]'
-                                                    dir="ltr"></div>
+                                            
+                                            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+                                                <div class="flex items-center space-x-3">
+                                                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                                        <svg class="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <h4 class="font-medium text-slate-800">Easy Shopping</h4>
+                                                        <p class="text-slate-500 text-sm">One-tap ordering</p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-span-12 md:col-span-6 2xl:col-span-5">
-                                                <ul class="flex flex-col gap-3">
-                                                    <li class="flex items-center gap-2">
-                                                        <div class="bg-green-500 size-3 shrink-0 clip-triangle"></div>
-                                                        <p class="text-green-500">Search Engine (22%)</p>
-                                                    </li>
-                                                    <li class="flex items-center gap-2">
-                                                        <div class="bg-purple-500 size-3 shrink-0 clip-triangle">
-                                                        </div>
-                                                        <p class="text-purple-500">Referral (34%)</p>
-                                                    </li>
-                                                    <li class="flex items-center gap-2">
-                                                        <div class="size-3 bg-sky-500 shrink-0 clip-triangle"></div>
-                                                        <p class="text-sky-500">Direct (44%)</p>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!--end col-->
-                                <div class="col-span-12 card lg:col-span-6 2xl:col-span-12">
-                                    <div class="card-body">
-                                        <div class="flex items-center mb-2">
-                                            <h5 class="grow"><span class="counter-value"
-                                                    data-target="1596">0</span></h5>
-                                            <span
-                                                class="px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-white border-red-100 text-red-500 dark:bg-zink-700 dark:border-red-900"><i
-                                                    data-lucide="trending-down"
-                                                    class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> 6.8%</span>
-                                        </div>
-                                        <h6 class="mb-0">Monthly Orders Goal (20000+)</h6>
-                                        <div>
-                                            <div class="flex items-center justify-between mt-5 mb-2">
-                                                <p class="text-slate-500 dark:text-zink-200">Total Orders</p>
-                                                <h6 class="mb-0 text-custom-500">85%</h6>
-                                            </div>
-                                            <div class="w-full bg-slate-200 rounded-full h-2.54 dark:bg-zink-600">
-                                                <div class="bg-custom-500 h-2.5 rounded-full" style="width: 85%">
+                                            
+                                            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+                                                <div class="flex items-center space-x-3">
+                                                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                                        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9.5 7.707 6.621a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <h4 class="font-medium text-slate-800">Fast Delivery</h4>
+                                                        <p class="text-slate-500 text-sm">Same day shipping</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div><!--end col-->
-                            </div><!--end grid-->
-                        </div><!--end col-->
-                        <div class="col-span-12 card 2xl:col-span-12">
-                            <div class="card-body">
-                                <div class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">
-                                    <div class="2xl:col-span-3">
-                                        <h6 class="text-15">Product Orders</h6>
-                                    </div><!--end col-->
-                                    <div class="2xl:col-span-3 2xl:col-start-10">
-                                        <div class="flex gap-3">
-                                            <div class="relative grow">
-                                                <input type="text"
-                                                    class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                    placeholder="Search for ..." autocomplete="off">
-                                                <i data-lucide="search"
-                                                    class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
-                                            </div>
-                                            <button type="button"
-                                                class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i
-                                                    class="align-baseline ltr:pr-1 rtl:pl-1 ri-download-2-line"></i>
-                                                Export</button>
-                                        </div>
-                                    </div><!--end col-->
-                                </div><!--end grid-->
-                                <div class="overflow-x-auto">
-                                    <table class="w-full whitespace-nowrap">
-                                        <thead
-                                            class="ltr:text-left rtl:text-right bg-slate-100 text-slate-500 dark:text-zink-200 dark:bg-zink-600">
-                                            <tr>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    #
-                                                </th>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    Order ID</th>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    Customer Name</th>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    Location</th>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    Order Date</th>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    Payments</th>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    Quantity</th>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    Price</th>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    Total Amount</th>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    Status</th>
-                                                <th
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">
-                                                    Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    01
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <a href="apps-ecommerce-order-overview.html">#TWT5015100365</a>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Marie Prohaska</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Germany</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    08 Jun, 2023</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Credit Card</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    05</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $146.99</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $749.95</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <span
-                                                        class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">Delivered</span>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <div class="relative dropdown">
-                                                        <button id="orderAction1" data-bs-toggle="dropdown"
-                                                            class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"><i
-                                                                data-lucide="more-horizontal"
-                                                                class="size-3"></i></button>
-                                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                                            aria-labelledby="orderAction1">
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="apps-ecommerce-order-overview.html"><i
-                                                                        data-lucide="eye"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Overview</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="file-edit"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Edit</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="trash-2"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Delete</span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    02
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <a href="apps-ecommerce-order-overview.html">#TWT5015100366</a>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Jaqueline Hammes</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    France</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    11 July, 2023</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Paypal</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    02</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $450.00</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $900.00</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <span
-                                                        class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-purple-100 border-purple-200 text-purple-500 dark:bg-purple-500/20 dark:border-purple-500/20">Shipping</span>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <div class="relative dropdown">
-                                                        <button id="orderAction2" data-bs-toggle="dropdown"
-                                                            class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"><i
-                                                                data-lucide="more-horizontal"
-                                                                class="size-3"></i></button>
-                                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                                            aria-labelledby="orderAction2">
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="apps-ecommerce-order-overview.html"><i
-                                                                        data-lucide="eye"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Overview</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="file-edit"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Edit</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="trash-2"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Delete</span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    03
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <a href="apps-ecommerce-order-overview.html">#TWT5015100367</a>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Marlene Hirthe</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Argentina</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    21 Aug, 2023</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Visa Card</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    03</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $147.23</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $294.46</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <span
-                                                        class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-sky-100 border-sky-200 text-sky-500 dark:bg-sky-500/20 dark:border-sky-500/20">New</span>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <div class="relative dropdown">
-                                                        <button id="orderAction3" data-bs-toggle="dropdown"
-                                                            class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"><i
-                                                                data-lucide="more-horizontal"
-                                                                class="size-3"></i></button>
-                                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                                            aria-labelledby="orderAction3">
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="apps-ecommerce-order-overview.html"><i
-                                                                        data-lucide="eye"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Overview</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="file-edit"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Edit</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="trash-2"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Delete</span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    04
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <a href="apps-ecommerce-order-overview.html">#TWT5015100368</a>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Reagan Larson</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Belgium</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    28 Nov, 2023</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    American Express</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    01</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $579.12</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $579.12</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <span
-                                                        class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">Delivered</span>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <div class="relative dropdown">
-                                                        <button id="orderAction4" data-bs-toggle="dropdown"
-                                                            class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"><i
-                                                                data-lucide="more-horizontal"
-                                                                class="size-3"></i></button>
-                                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                                            aria-labelledby="orderAction4">
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="apps-ecommerce-order-overview.html"><i
-                                                                        data-lucide="eye"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Overview</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="file-edit"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Edit</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="trash-2"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Delete</span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    05
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <a href="apps-ecommerce-order-overview.html">#TWT5015100369</a>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Glennie Langosh</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Australia</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    11 Oct, 2023</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    American Express</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    01</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $349.00</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $349.00</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <span
-                                                        class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-yellow-100 border-yellow-200 text-yellow-500 dark:bg-yellow-500/20 dark:border-yellow-500/20">Pending</span>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <div class="relative dropdown">
-                                                        <button id="orderAction5" data-bs-toggle="dropdown"
-                                                            class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"><i
-                                                                data-lucide="more-horizontal"
-                                                                class="size-3"></i></button>
-                                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                                            aria-labelledby="orderAction5">
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="apps-ecommerce-order-overview.html"><i
-                                                                        data-lucide="eye"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Overview</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="file-edit"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Edit</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="trash-2"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Delete</span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    06
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <a href="apps-ecommerce-order-overview.html">#TWT5015100370</a>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Rickie Cremin</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    United States</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    16 Feb, 2023</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    COD</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    03</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $89.49</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $268.47</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <span
-                                                        class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20">Delivered</span>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <div class="relative dropdown">
-                                                        <button id="orderAction6" data-bs-toggle="dropdown"
-                                                            class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"><i
-                                                                data-lucide="more-horizontal"
-                                                                class="size-3"></i></button>
-                                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                                            aria-labelledby="orderAction6">
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="apps-ecommerce-order-overview.html"><i
-                                                                        data-lucide="eye"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Overview</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="file-edit"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Edit</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="trash-2"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Delete</span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    07
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <a href="apps-ecommerce-order-overview.html">#TWT5015100371</a>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Domenic Tromp</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    Afghanistan</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    21 Jan, 2024</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    PayPal</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    02</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $739.79</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    $1,479.58</td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <span
-                                                        class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-sky-100 border-sky-200 text-sky-500 dark:bg-sky-500/20 dark:border-sky-500/20">New</span>
-                                                </td>
-                                                <td
-                                                    class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500">
-                                                    <div class="relative dropdown">
-                                                        <button id="orderAction6" data-bs-toggle="dropdown"
-                                                            class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"><i
-                                                                data-lucide="more-horizontal"
-                                                                class="size-3"></i></button>
-                                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                                            aria-labelledby="orderAction6">
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="apps-ecommerce-order-overview.html"><i
-                                                                        data-lucide="eye"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Overview</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="file-edit"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Edit</span></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                                    href="#!"><i data-lucide="trash-2"
-                                                                        class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                                                    <span class="align-middle">Delete</span></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
-                                <div class="flex flex-col items-center mt-5 md:flex-row">
-                                    <div class="mb-4 grow md:mb-0">
-                                        <p class="text-slate-500 dark:text-zink-200">Showing <b>07</b> of <b>19</b>
-                                            Results</p>
-                                    </div>
-                                    <ul class="flex flex-wrap items-center gap-2 shrink-0">
-                                        <li>
-                                            <a href="#!"
-                                                class="inline-flex items-center justify-center bg-white dark:bg-zink-700 h-8 px-3 transition-all duration-150 ease-linear border rounded border-slate-200 dark:border-zink-500 text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-500 dark:[&.active]:text-custom-500 [&.active]:bg-custom-50 dark:[&.active]:bg-custom-500/10 [&.active]:border-custom-50 dark:[&.active]:border-custom-500/10 [&.active]:hover:text-custom-700 dark:[&.active]:hover:text-custom-700 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto"><i
-                                                    class="mr-1 size-4 rtl:rotate-180"
-                                                    data-lucide="chevron-left"></i> Prev</a>
-                                        </li>
-                                        <li>
-                                            <a href="#!"
-                                                class="inline-flex items-center justify-center bg-white dark:bg-zink-700 w-8 h-8 transition-all duration-150 ease-linear border rounded border-slate-200 dark:border-zink-500 text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-500 dark:[&.active]:text-custom-500 [&.active]:bg-custom-50 dark:[&.active]:bg-custom-500/10 [&.active]:border-custom-50 dark:[&.active]:border-custom-500/10 [&.active]:hover:text-custom-700 dark:[&.active]:hover:text-custom-700 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto">1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#!"
-                                                class="inline-flex items-center justify-center bg-white dark:bg-zink-700 w-8 h-8 transition-all duration-150 ease-linear border rounded border-slate-200 dark:border-zink-500 text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-500 dark:[&.active]:text-custom-500 [&.active]:bg-custom-50 dark:[&.active]:bg-custom-500/10 [&.active]:border-custom-50 dark:[&.active]:border-custom-500/10 [&.active]:hover:text-custom-700 dark:[&.active]:hover:text-custom-700 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto active">2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#!"
-                                                class="inline-flex items-center justify-center bg-white dark:bg-zink-700 w-8 h-8 transition-all duration-150 ease-linear border rounded border-slate-200 dark:border-zink-500 text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-500 dark:[&.active]:text-custom-500 [&.active]:bg-custom-50 dark:[&.active]:bg-custom-500/10 [&.active]:border-custom-50 dark:[&.active]:border-custom-500/10 [&.active]:hover:text-custom-700 dark:[&.active]:hover:text-custom-700 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto">3</a>
-                                        </li>
-                                        <li>
-                                            <a href="#!"
-                                                class="inline-flex items-center justify-center bg-white dark:bg-zink-700 h-8 px-3 transition-all duration-150 ease-linear border rounded border-slate-200 dark:border-zink-500 text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-500 dark:[&.active]:text-custom-500 [&.active]:bg-custom-50 dark:[&.active]:bg-custom-500/10 [&.active]:border-custom-50 dark:[&.active]:border-custom-500/10 [&.active]:hover:text-custom-700 dark:[&.active]:hover:text-custom-700 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto">Next
-                                                <i class="ml-1 size-4 rtl:rotate-180"
-                                                    data-lucide="chevron-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
-                            <div class="card-body">
-                                <div class="flex items-center mb-3">
-                                    <h6 class="grow text-15">Customer Service</h6>
-                                    <div class="relative dropdown shrink-0">
-                                        <button type="button"
-                                            class="flex items-center justify-center size-[30px] p-0 bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-700 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10 dropdown-toggle"
-                                            id="customServiceDropdown" data-bs-toggle="dropdown">
-                                            <i data-lucide="more-vertical" class="inline-block size-4"></i>
-                                        </button>
-
-                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                            aria-labelledby="customServiceDropdown">
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">1 Weekly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">1 Monthly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">3 Monthly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">6 Monthly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">This Yearly</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="flex items-center justify-between mt-5 mb-2">
-                                        <p class="text-slate-500 dark:text-zink-200">28% of the Goal Reached ($25k)
-                                        </p>
-                                    </div>
-                                    <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-zink-600">
-                                        <div class="h-2 bg-green-500 rounded-full" style="width: 28%"></div>
-                                    </div>
-                                    <div class="grid mt-3 xl:grid-cols-2">
-                                        <div class="flex items-center gap-2">
-                                            <div class="shrink-0">
-                                                <i data-lucide="calendar-days"
-                                                    class="inline-block mb-1 align-middle size-4"></i>
-                                            </div>
-                                            <p class="mb-0 text-slate-500 dark:text-zink-200">This Month: <span
-                                                    class="font-medium text-slate-800 dark:text-zink-50">$13,741</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h6 class="mt-4 mb-3">Top Customer</h6>
-                                <ul class="divide-y divide-slate-200 dark:divide-zink-500">
-                                    <li class="flex items-center gap-3 py-2 first:pt-0 last:pb-0">
-                                        <div class="w-8 h-8 rounded-full shrink-0 bg-slate-100 dark:bg-zink-600">
-                                            <img src="{{ asset('admin/assets/images/avatar-2.png') }}" alt=""
-                                                class="w-8 h-8 rounded-full">
-                                        </div>
-                                        <div class="grow">
-                                            <h6 class="font-medium">Urrie Arthur</h6>
-                                            <p class="text-slate-500 dark:text-zink-200">arthur@tailwick.com</p>
-                                        </div>
-                                        <div class="shrink-0">
-                                            <h6>$2,452</h6>
-                                        </div>
-                                    </li>
-                                    <li class="flex items-center gap-3 py-2 first:pt-0 last:pb-0">
-                                        <div class="w-8 h-8 rounded-full shrink-0 bg-slate-100 dark:bg-zink-600">
-                                            <img src="{{ asset('admin/assets/images/avatar-3.png') }}" alt=""
-                                                class="w-8 h-8 rounded-full">
-                                        </div>
-                                        <div class="grow">
-                                            <h6 class="font-medium">Natalie Christy</h6>
-                                            <p class="text-slate-500 dark:text-zink-200">natalie@tailwick.com</p>
-                                        </div>
-                                        <div class="shrink-0">
-                                            <h6>$1,893</h6>
-                                        </div>
-                                    </li>
-                                    <li class="flex items-center gap-3 py-2 first:pt-0 last:pb-0">
-                                        <div class="w-8 h-8 rounded-full shrink-0 bg-slate-100 dark:bg-zink-600">
-                                            <img src="{{ asset('admin/assets/images/avatar-4.png') }}" alt=""
-                                                class="w-8 h-8 rounded-full">
-                                        </div>
-                                        <div class="grow">
-                                            <h6 class="font-medium">Laurie Jackson</h6>
-                                            <p class="text-slate-500 dark:text-zink-200">jackson@tailwick.com</p>
-                                        </div>
-                                        <div class="shrink-0">
-                                            <h6>$1,196</h6>
-                                        </div>
-                                    </li>
-                                    <li class="flex items-center gap-3 py-2 first:pt-0 last:pb-0">
-                                        <div class="w-8 h-8 rounded-full shrink-0 bg-slate-100 dark:bg-zink-600">
-                                            <img src="{{ asset('admin/assets/images/avatar-5.png') }}" alt=""
-                                                class="w-8 h-8 rounded-full">
-                                        </div>
-                                        <div class="grow">
-                                            <h6 class="font-medium">Michael Torres</h6>
-                                            <p class="text-slate-500 dark:text-zink-200">torres@tailwick.com</p>
-                                        </div>
-                                        <div class="shrink-0">
-                                            <h6>$976</h6>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
-                            <div class="card-body">
-                                <div class="flex items-center mb-3">
-                                    <h6 class="grow text-15">Sales This Month</h6>
-                                    <div class="relative dropdown shrink-0">
-                                        <button type="button"
-                                            class="flex items-center justify-center size-[30px] p-0 bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-700 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10 dropdown-toggle"
-                                            id="sellingProductDropdown" data-bs-toggle="dropdown">
-                                            <i data-lucide="more-vertical" class="inline-block size-4"></i>
-                                        </button>
-
-                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                            aria-labelledby="sellingProductDropdown">
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">1 Weekly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">1 Monthly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">3 Monthly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">6 Monthly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">This Yearly</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 my-3">
-                                    <div
-                                        class="flex items-center justify-center text-green-500 rounded-md size-12 bg-green-50 shrink-0 dark:bg-green-500/10">
-                                        <i data-lucide="trending-up"></i>
-                                    </div>
-                                    <div class="grow">
-                                        <p class="mb-1 text-slate-500 dark:text-zink-200">Total Profit</p>
-                                        <h5 class="text-15">$<span class="counter-value"
-                                                data-target="746.84">0</span>k</h5>
-                                    </div>
-                                </div>
-                                <div id="salesThisMonthChart" class="apex-charts"
-                                    data-chart-colors='["bg-sky-100", "bg-orange-100", "bg-sky-500", "bg-orange-500"]'
-                                    dir="ltr"></div>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
-                            <div class="card-body">
-                                <div class="flex items-center mb-3">
-                                    <h6 class="grow text-15">Top Selling Products</h6>
-                                    <div class="relative dropdown shrink-0">
-                                        <button type="button"
-                                            class="flex items-center justify-center size-[30px] p-0 bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-700 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10 dropdown-toggle"
-                                            id="sellingProductDropdown" data-bs-toggle="dropdown">
-                                            <i data-lucide="more-vertical" class="inline-block size-4"></i>
-                                        </button>
-
-                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                            aria-labelledby="sellingProductDropdown">
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">1 Weekly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">1 Monthly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">3 Monthly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">6 Monthly</a>
-                                            </li>
-                                            <li>
-                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                                    href="#!">This Yearly</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <ul class="flex flex-col gap-5">
-                                    <li class="flex items-center gap-3">
-                                        <div
-                                            class="flex items-center justify-center w-10 h-10 rounded-md bg-slate-100 dark:bg-zink-600">
-                                            <img src="{{ asset('admin/assets/images/img-02.png') }}" alt="" class="h-6">
-                                        </div>
-                                        <div class="overflow-hidden grow">
-                                            <h6 class="truncate">Mesh Ergonomic Black Chair</h6>
-                                            <div class="text-yellow-500">
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-half-fill"></i>
-                                            </div>
-                                        </div>
-                                        <h6 class="shrink-0"><i data-lucide="shopping-cart"
-                                                class="inline-block align-middle size-4 text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1"></i>
-                                            798</h6>
-                                    </li>
-                                    <li class="flex items-center gap-3">
-                                        <div
-                                            class="flex items-center justify-center w-10 h-10 rounded-md bg-slate-100 dark:bg-zink-600">
-                                            <img src="{{ asset('admin/assets/images/img-03.png') }}" alt="" class="h-6">
-                                        </div>
-                                        <div class="overflow-hidden grow">
-                                            <h6 class="truncate">Fastcolors Typography Men</h6>
-                                            <div class="text-yellow-500">
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-half-fill"></i>
-                                            </div>
-                                        </div>
-                                        <h6 class="shrink-0"><i data-lucide="shopping-cart"
-                                                class="inline-block align-middle size-4 text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1"></i>
-                                            695</h6>
-                                    </li>
-                                    <li class="flex items-center gap-3">
-                                        <div
-                                            class="flex items-center justify-center w-10 h-10 rounded-md bg-slate-100 dark:bg-zink-600">
-                                            <img src="{{ asset('admin/assets/images/img-04.png') }}" alt="" class="h-6">
-                                        </div>
-                                        <div class="overflow-hidden grow">
-                                            <h6 class="truncate">Mesh Ergonomic Green Chair</h6>
-                                            <div class="text-yellow-500">
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-half-fill"></i>
-                                            </div>
-                                        </div>
-                                        <h6 class="shrink-0"><i data-lucide="shopping-cart"
-                                                class="inline-block align-middle size-4 text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1"></i>
-                                            985</h6>
-                                    </li>
-                                    <li class="flex items-center gap-3">
-                                        <div
-                                            class="flex items-center justify-center w-10 h-10 rounded-md bg-slate-100 dark:bg-zink-600">
-                                            <img src="{{ asset('admin/assets/images/img-05.png') }}" alt="" class="h-6">
-                                        </div>
-                                        <div class="overflow-hidden grow">
-                                            <h6 class="truncate">Techel Black Bluetooth Soundbar</h6>
-                                            <div class="text-yellow-500">
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-half-fill"></i>
-                                            </div>
-                                        </div>
-                                        <h6 class="shrink-0"><i data-lucide="shopping-cart"
-                                                class="inline-block align-middle size-4 text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1"></i>
-                                            813</h6>
-                                    </li>
-                                    <li class="flex items-center gap-3">
-                                        <div
-                                            class="flex items-center justify-center w-10 h-10 rounded-md bg-slate-100 dark:bg-zink-600">
-                                            <img src="{{ asset('admin/assets/images/img-06.png') }}" alt="" class="h-6">
-                                        </div>
-                                        <div class="overflow-hidden grow">
-                                            <h6 class="truncate">Bovet Fleurier AIFSQ029</h6>
-                                            <div class="text-yellow-500">
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-half-fill"></i>
-                                            </div>
-                                        </div>
-                                        <h6 class="shrink-0"><i data-lucide="shopping-cart"
-                                                class="inline-block align-middle size-4 text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1"></i>
-                                            915</h6>
-                                    </li>
-                                    <li class="flex items-center gap-3">
-                                        <div
-                                            class="flex items-center justify-center w-10 h-10 rounded-md bg-slate-100 dark:bg-zink-600">
-                                            <img src="{{ asset('admin/assets/images/img-03.png') }}" alt="" class="h-6">
-                                        </div>
-                                        <div class="overflow-hidden grow">
-                                            <h6 class="truncate">Fastcolors Typography Men</h6>
-                                            <div class="text-yellow-500">
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-half-fill"></i>
-                                            </div>
-                                        </div>
-                                        <h6 class="shrink-0"><i data-lucide="shopping-cart"
-                                                class="inline-block align-middle size-4 text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1"></i>
-                                            785</h6>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-span-12 card lg:col-span-6 2xl:col-span-3">
-                            <div class="card-body">
-                                <h6 class="relative mb-3 grow text-15">Audience</h6>
-                                <div id="audienceChart" class="-mt-9 apex-charts"
-                                    data-chart-colors='["bg-sky-500", "bg-orange-400", "bg-green-500", "bg-yellow-500"]'
-                                    dir="ltr"></div>
-                            </div>
-                        </div><!--end col-->
-                    </div><!--end grid-->
-                </div>
-                <!-- container-fluid -->
-            </div>
-            <!-- End Page-content -->
-
-            <footer
-                class="ltr:md:left-vertical-menu rtl:md:right-vertical-menu group-data-[sidebar-size=md]:ltr:md:left-vertical-menu-md group-data-[sidebar-size=md]:rtl:md:right-vertical-menu-md group-data-[sidebar-size=sm]:ltr:md:left-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:md:right-vertical-menu-sm absolute right-0 bottom-0 px-4 h-14 group-data-[layout=horizontal]:ltr:left-0  group-data-[layout=horizontal]:rtl:right-0 left-0 border-t py-3 flex items-center dark:border-zink-600">
-                <div
-                    class="group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl w-full">
-                    <div
-                        class="grid items-center grid-cols-1 text-center lg:grid-cols-2 text-slate-400 dark:text-zink-200 ltr:lg:text-left rtl:lg:text-right">
-                        <div>
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script> © Tailwick.
-                        </div>
-                        <div class="hidden lg:block">
-                            <div class="ltr:text-right rtl:text-left">
-                                Design & Develop by Themesdesign
                             </div>
                         </div>
                     </div>
                 </div>
-            </footer>
-        </div>
-
-    </div>
-    <!-- end main content -->
-
-    <div class="fixed items-center hidden bottom-6 right-12 h-header group-data-[navbar=hidden]:flex">
-        <button data-drawer-target="customizerButton" type="button"
-            class="inline-flex items-center justify-center w-12 h-12 p-0 transition-all duration-200 ease-linear rounded-md shadow-lg text-sky-50 bg-sky-500">
-            <i data-lucide="settings" class="inline-block w-5 h-5"></i>
-        </button>
-    </div>
-
-    <div id="customizerButton" drawer-end
-        class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow ltr:right-0 rtl:left-0 md:w-96 z-drawer show dark:bg-zink-600">
-        <div class="flex justify-between p-4 border-b border-slate-200 dark:border-zink-500">
-            <div class="grow">
-                <h5 class="mb-1 text-16">Tailwick Theme Customizer</h5>
-                <p class="font-normal text-slate-500 dark:text-zink-200">Choose your themes & layouts etc.</p>
-            </div>
-            <div class="shrink-0">
-                <button data-drawer-close="customizerButton"
-                    class="transition-all duration-150 ease-linear text-slate-500 hover:text-slate-800 dark:text-zink-200 dark:hover:text-zink-50"><i
-                        data-lucide="x" class="w-4 h-4"></i></button>
             </div>
         </div>
-        <div class="h-full p-6 overflow-y-auto">
-            <div>
-                <h5 class="mb-3 underline capitalize text-15">Choose Layouts</h5>
-                <div class="grid grid-cols-1 mb-5 gap-7 sm:grid-cols-2">
-                    <div class="relative">
-                        <input id="layout-one" name="dataLayout"
-                            class="absolute w-4 h-4 border rounded-full appearance-none cursor-pointer ltr:right-2 rtl:left-2 top-2 vertical-menu-btn bg-slate-100 border-slate-300 checked:bg-custom-500 checked:border-custom-500 dark:bg-zink-400 dark:border-zink-500"
-                            type="radio" value="vertical" checked>
-                        <label
-                            class="block w-full h-24 p-0 overflow-hidden border rounded-lg cursor-pointer border-slate-200 dark:border-zink-500"
-                            for="layout-one">
-                            <span class="flex h-full gap-0">
-                                <span class="shrink-0">
-                                    <span
-                                        class="flex flex-col h-full gap-1 p-1 ltr:border-r rtl:border-l border-slate-200 dark:border-zink-500">
-                                        <span
-                                            class="block p-1 px-2 mb-2 rounded bg-slate-100 dark:bg-zink-400"></span>
-                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
-                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
-                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
-                                    </span>
-                                </span>
-                                <span class="grow">
-                                    <span class="flex flex-col h-full">
-                                        <span class="block h-3 bg-slate-100 dark:bg-zink-500"></span>
-                                        <span class="block h-3 mt-auto bg-slate-100 dark:bg-zink-500"></span>
-                                    </span>
-                                </span>
-                            </span>
-                        </label>
-                        <h5 class="mt-2 text-center text-15">Vertical</h5>
-                    </div>
+    </section>
 
-                    <div class="relative">
-                        <input id="layout-two" name="dataLayout"
-                            class="absolute w-4 h-4 border rounded-full appearance-none cursor-pointer ltr:right-2 rtl:left-2 top-2 vertical-menu-btn bg-slate-100 border-slate-300 checked:bg-custom-500 checked:border-custom-500 dark:bg-zink-400 dark:border-zink-500"
-                            type="radio" value="horizontal">
-                        <label
-                            class="block w-full h-24 p-0 overflow-hidden border rounded-lg cursor-pointer border-slate-200 dark:border-zink-500"
-                            for="layout-two">
-                            <span class="flex flex-col h-full gap-1">
-                                <span class="flex items-center gap-1 p-1 bg-slate-100 dark:bg-zink-500">
-                                    <span class="block p-1 ml-1 bg-white rounded dark:bg-zink-500"></span>
-                                    <span class="block p-1 px-2 pb-0 bg-white dark:bg-zink-500 ms-auto"></span>
-                                    <span class="block p-1 px-2 pb-0 bg-white dark:bg-zink-500"></span>
-                                </span>
-                                <span class="block p-1 bg-slate-100 dark:bg-zink-500"></span>
-                                <span class="block p-1 mt-auto bg-slate-100 dark:bg-zink-500"></span>
-                            </span>
-                        </label>
-                        <h5 class="mt-2 text-center text-15">Horizontal</h5>
-                    </div>
-                </div>
+    <section class="relative py-32 bg-slate-900 dark:bg-zink-700" id="features">
+        <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
+            <div class="mx-auto text-center xl:max-w-3xl mb-16">
+                <h1 class="mb-6 leading-normal capitalize text-slate-100 dark:text-zink-50">
+                    Discover Amazing Features in Our 
+                    <span class="relative inline-block px-2 mx-2 before:block before:absolute before:-inset-1 before:-skew-y-6 before:bg-sky-500/20 before:rounded-md before:backdrop-blur-xl">
+                        <span class="relative text-sky-400">Mobile App</span>
+                    </span>
+                </h1>
+                <p class="text-lg text-slate-400 dark:text-zink-200">
+                    Experience the future of gift shopping with our intuitive mobile application designed for gift lovers.
+                </p>
+            </div>
 
-                <div id="semi-dark">
-                    <div class="flex items-center">
-                        <div class="relative inline-block w-10 mr-2 align-middle transition duration-200 ease-in">
-                            <input type="checkbox" name="customDefaultSwitch" value="dark"
-                                id="customDefaultSwitch"
-                                class="absolute block w-5 h-5 transition duration-300 ease-linear border-2 rounded-full appearance-none cursor-pointer border-slate-200 bg-white/80 peer/published checked:bg-white checked:right-0 checked:border-custom-500 arrow-none dark:border-zink-500 dark:bg-zink-500 dark:checked:bg-zink-400 checked:bg-none">
-                            <label for="customDefaultSwitch"
-                                class="block h-5 overflow-hidden transition duration-300 ease-linear border rounded-full cursor-pointer border-slate-200 bg-slate-200 peer-checked/published:bg-custom-500 peer-checked/published:border-custom-500 dark:border-zink-500 dark:bg-zink-600"></label>
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-12 gap-x-5">
+                <div class="xl:col-span-4">
+                    <div class="transition-all duration-300 ease-linear -mt-16 bg-white dark:bg-zink-600 rounded-xl shadow-xl hover:-translate-y-2 p-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-sky-100 to-sky-200 rounded-lg mb-6 flex items-center justify-center">
+                            <i data-lucide="check-circle" class="w-16 h-16 text-sky-500 transition animate-pulse"></i>
                         </div>
-                        <label for="customDefaultSwitch" class="inline-block text-base font-medium">Semi Dark
-                            (Sidebar & Header)</label>
+                        <span class="px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-sky-100 border-sky-200 text-sky-500 dark:bg-sky-500/20 dark:border-sky-500/20 mb-3">Popular Feature</span>
+                        <h6 class="text-lg font-semibold mb-2 text-slate-800 dark:text-zink-100">Smart Gift Finder</h6>
+                        <p class="text-slate-500 dark:text-zink-200">AI-powered recommendations help you find the perfect gift based on recipient's interests and occasion.</p>
+                    </div>
+                </div>
+                
+                <div class="xl:col-span-4">
+                    <div class="transition-all duration-300 ease-linear md:-mt-16 bg-white dark:bg-zink-600 rounded-xl shadow-xl hover:-translate-y-2 p-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg mb-6 flex items-center justify-center">
+                            <i data-lucide="gift" class="w-16 h-16 text-purple-500 transition animate-pulse"></i>
+                        </div>
+                        <span class="px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-purple-100 border-purple-200 text-purple-500 dark:bg-purple-500/20 dark:border-purple-500/20 mb-3">Gift Wrapping</span>
+                        <h6 class="text-lg font-semibold mb-2 text-slate-800 dark:text-zink-100">Custom Gift Wrapping</h6>
+                        <p class="text-slate-500 dark:text-zink-200">Beautiful gift wrapping options with personalized messages to make your gifts extra special.</p>
+                    </div>
+                </div>
+                
+                <div class="xl:col-span-4">
+                    <div class="transition-all duration-300 ease-linear xl:-mt-16 bg-white dark:bg-zink-600 rounded-xl shadow-xl hover:-translate-y-2 p-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-green-100 to-green-200 rounded-lg mb-6 flex items-center justify-center">
+                            <i data-lucide="clock" class="w-16 h-16 text-green-500 transition animate-pulse"></i>
+                        </div>
+                        <span class="px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20 mb-3">Fast Delivery</span>
+                        <h6 class="text-lg font-semibold mb-2 text-slate-800 dark:text-zink-100">Express Delivery</h6>
+                        <p class="text-slate-500 dark:text-zink-200">Same-day and next-day delivery options available for last-minute gifting needs.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-6">
-                <!-- data-skin="" -->
-                <h5 class="mb-3 underline capitalize text-15">Skin Layouts</h5>
-                <div class="grid grid-cols-1 mb-5 gap-7 sm:grid-cols-2">
-                    <div class="relative">
-                        <input id="layoutSkitOne" name="dataLayoutSkin"
-                            class="absolute w-4 h-4 border rounded-full appearance-none cursor-pointer ltr:right-2 rtl:left-2 top-2 vertical-menu-btn bg-slate-100 border-slate-300 checked:bg-custom-500 checked:border-custom-500 dark:bg-zink-400 dark:border-zink-500"
-                            type="radio" value="default">
-                        <label
-                            class="block w-full h-24 p-0 overflow-hidden border rounded-lg cursor-pointer border-slate-200 dark:border-zink-500 bg-slate-50 dark:bg-zink-600"
-                            for="layoutSkitOne">
-                            <span class="flex h-full gap-0">
-                                <span class="shrink-0">
-                                    <span
-                                        class="flex flex-col h-full gap-1 p-1 ltr:border-r rtl:border-l border-slate-200 dark:border-zink-500">
-                                        <span
-                                            class="block p-1 px-2 mb-2 rounded bg-slate-100 dark:bg-zink-400"></span>
-                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
-                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
-                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
-                                    </span>
-                                </span>
-                                <span class="grow">
-                                    <span class="flex flex-col h-full">
-                                        <span class="block h-3 bg-slate-100 dark:bg-zink-500"></span>
-                                        <span class="block h-3 mt-auto bg-slate-100 dark:bg-zink-500"></span>
-                                    </span>
-                                </span>
-                            </span>
-                        </label>
-                        <h5 class="mt-2 text-center text-15">Default</h5>
+            <div class="p-10 mt-20 rounded-xl bg-slate-800 dark:bg-zink-600">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    <div class="text-center">
+                        <h3 class="mb-2 text-3xl font-bold text-slate-50 dark:text-zink-50">10K+</h3>
+                        <p class="text-slate-400 dark:text-zink-200">Unique Gifts</p>
                     </div>
-
-                    <div class="relative">
-                        <input id="layoutSkitTwo" name="dataLayoutSkin"
-                            class="absolute w-4 h-4 border rounded-full appearance-none cursor-pointer ltr:right-2 rtl:left-2 top-2 vertical-menu-btn bg-slate-100 border-slate-300 checked:bg-custom-500 checked:border-custom-500 dark:bg-zink-400 dark:border-zink-500"
-                            type="radio" value="bordered" checked>
-                        <label
-                            class="block w-full h-24 p-0 overflow-hidden border rounded-lg cursor-pointer border-slate-200 dark:border-zink-500"
-                            for="layoutSkitTwo">
-                            <span class="flex h-full gap-0">
-                                <span class="shrink-0">
-                                    <span
-                                        class="flex flex-col h-full gap-1 p-1 ltr:border-r rtl:border-l border-slate-200 dark:border-zink-500">
-                                        <span
-                                            class="block p-1 px-2 mb-2 rounded bg-slate-100 dark:bg-zink-400"></span>
-                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
-                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
-                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
-                                    </span>
-                                </span>
-                                <span class="grow">
-                                    <span class="flex flex-col h-full">
-                                        <span class="block h-3 border-b border-slate-200 dark:border-zink-500"></span>
-                                        <span
-                                            class="block h-3 mt-auto border-t border-slate-200 dark:border-zink-500"></span>
-                                    </span>
-                                </span>
-                            </span>
-                        </label>
-                        <h5 class="mt-2 text-center text-15">Bordered</h5>
+                    <div class="text-center">
+                        <h3 class="mb-2 text-3xl font-bold text-slate-50 dark:text-zink-50">50K+</h3>
+                        <p class="text-slate-400 dark:text-zink-200">Happy Customers</p>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="mb-2 text-3xl font-bold text-slate-50 dark:text-zink-50">24/7</h3>
+                        <p class="text-slate-400 dark:text-zink-200">Customer Support</p>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="mb-2 text-3xl font-bold text-slate-50 dark:text-zink-50">99%</h3>
+                        <p class="text-slate-400 dark:text-zink-200">Satisfaction Rate</p>
                     </div>
                 </div>
             </div>
-
-            <div class="mt-6">
-                <!-- data-mode="" -->
-                <h5 class="mb-3 underline capitalize text-15">Light & Dark</h5>
-                <div class="flex gap-3">
-                    <button type="button" id="dataModeOne" name="dataMode" value="light"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500 active">Light
-                        Mode</button>
-                    <button type="button" id="dataModeTwo" name="dataMode" value="dark"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Dark
-                        Mode</button>
-                </div>
-            </div>
-
-            <div class="mt-6">
-                <!-- dir="ltr" -->
-                <h5 class="mb-3 underline capitalize text-15">LTR & RTL</h5>
-                <div class="flex flex-wrap gap-3">
-                    <button type="button" id="diractionOne" name="dir" value="ltr"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500 active">LTR
-                        Mode</button>
-                    <button type="button" id="diractionTwo" name="dir" value="rtl"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">RTL
-                        Mode</button>
-                </div>
-            </div>
-
-            <div class="mt-6">
-                <!-- data-content -->
-                <h5 class="mb-3 underline capitalize text-15">Content Width</h5>
-                <div class="flex gap-3">
-                    <button type="button" id="datawidthOne" name="datawidth" value="fluid"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500 active">Fluid</button>
-                    <button type="button" id="datawidthTwo" name="datawidth" value="boxed"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Boxed</button>
-                </div>
-            </div>
-
-            <div class="mt-6" id="sidebar-size">
-                <!-- data-sidebar-size="" -->
-                <h5 class="mb-3 underline capitalize text-15">Sidebar Size</h5>
-                <div class="flex flex-wrap gap-3">
-                    <button type="button" id="sidebarSizeOne" name="sidebarSize" value="lg"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500 active">Default</button>
-                    <button type="button" id="sidebarSizeTwo" name="sidebarSize" value="md"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Compact</button>
-                    <button type="button" id="sidebarSizeThree" name="sidebarSize" value="sm"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Small
-                        (Icon)</button>
-                </div>
-            </div>
-
-            <div class="mt-6" id="navigation-type">
-                <!-- data-navbar="" -->
-                <h5 class="mb-3 underline capitalize text-15">Navigation Type</h5>
-                <div class="flex flex-wrap gap-3">
-                    <button type="button" id="navbarTwo" name="navbar" value="sticky"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500 active">Sticky</button>
-                    <button type="button" id="navbarOne" name="navbar" value="scroll"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Scroll</button>
-                    <button type="button" id="navbarThree" name="navbar" value="bordered"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Bordered</button>
-                    <button type="button" id="navbarFour" name="navbar" value="hidden"
-                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Hidden</button>
-                </div>
-            </div>
-
-            <div class="mt-6" id="sidebar-color">
-                <!-- data-sidebar="" light, dark, brand, modern-->
-                <h5 class="mb-3 underline capitalize text-15">Sizebar Colors</h5>
-                <div class="flex flex-wrap gap-3">
-                    <button type="button" id="sidebarColorOne" name="sidebarColor" value="light"
-                        class="flex items-center justify-center w-10 h-10 bg-white border rounded-md border-slate-200 group active"><i
-                            data-lucide="check"
-                            class="w-5 h-5 hidden group-[.active]:inline-block text-slate-600"></i></button>
-                    <button type="button" id="sidebarColorTwo" name="sidebarColor" value="dark"
-                        class="flex items-center justify-center w-10 h-10 border rounded-md border-zink-900 bg-zink-900 group"><i
-                            data-lucide="check"
-                            class="w-5 h-5 hidden group-[.active]:inline-block text-white"></i></button>
-                    <button type="button" id="sidebarColorThree" name="sidebarColor" value="brand"
-                        class="flex items-center justify-center w-10 h-10 border rounded-md border-custom-800 bg-custom-800 group"><i
-                            data-lucide="check"
-                            class="w-5 h-5 hidden group-[.active]:inline-block text-white"></i></button>
-                    <button type="button" id="sidebarColorFour" name="sidebarColor" value="modern"
-                        class="flex items-center justify-center w-10 h-10 border rounded-md border-purple-950 bg-gradient-to-t from-red-400 to-purple-500 group"><i
-                            data-lucide="check"
-                            class="w-5 h-5 hidden group-[.active]:inline-block text-white"></i></button>
-                </div>
-            </div>
-
-            <div class="mt-6">
-                <!-- data-topbar="" light, dark, brand, modern-->
-                <h5 class="mb-3 underline capitalize text-15">Topbar Colors</h5>
-                <div class="flex flex-wrap gap-3">
-                    <button type="button" id="topbarColorOne" name="topbarColor" value="light"
-                        class="flex items-center justify-center w-10 h-10 bg-white border rounded-md border-slate-200 group active"><i
-                            data-lucide="check"
-                            class="w-5 h-5 hidden group-[.active]:inline-block text-slate-600"></i></button>
-                    <button type="button" id="topbarColorTwo" name="topbarColor" value="dark"
-                        class="flex items-center justify-center w-10 h-10 border rounded-md border-zink-900 bg-zink-900 group"><i
-                            data-lucide="check"
-                            class="w-5 h-5 hidden group-[.active]:inline-block text-white"></i></button>
-                    <button type="button" id="topbarColorThree" name="topbarColor" value="brand"
-                        class="flex items-center justify-center w-10 h-10 border rounded-md border-custom-800 bg-custom-800 group"><i
-                            data-lucide="check"
-                            class="w-5 h-5 hidden group-[.active]:inline-block text-white"></i></button>
-                </div>
-            </div>
-
         </div>
-        <div class="flex items-center justify-between gap-3 p-4 border-t border-slate-200 dark:border-zink-500">
-            <button type="button" id="reset-layout"
-                class="w-full transition-all duration-200 ease-linear text-slate-500 btn bg-slate-200 border-slate-200 hover:text-slate-600 hover:bg-slate-300 hover:border-slate-300 focus:text-slate-600 focus:bg-slate-300 focus:border-slate-300 focus:ring focus:ring-slate-100">Reset</button>
-            <a href="#!"
-                class="w-full text-white transition-all duration-200 ease-linear bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100">Buy
-                Now</a>
+        <div class="absolute rotate-45 border border-dashed size-[500px] border-t-slate-700 border-l-slate-700 border-r-slate-700 border-b-slate-700 bottom-48 rounded-full ltr:-left-80 rtl:-right-80 hidden md:block"></div>
+        <div class="absolute rotate-45 border border-dashed size-[700px] border-t-slate-700 border-l-slate-700 border-r-slate-700 border-b-slate-700 bottom-24 rounded-full ltr:-left-96 rtl:-right-96 hidden md:block"></div>
+    </section>
+
+    <section class="relative py-32" id="about">
+        <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
+            <div class="mx-auto text-center xl:max-w-3xl">
+                <h1 class="mb-6 leading-normal capitalize text-slate-800 dark:text-zink-50">
+                    Why Choose 
+                    <span class="relative inline-block px-2 mx-2 before:block before:absolute before:-inset-1 before:-skew-y-6 before:bg-sky-50 dark:before:bg-sky-500/20 before:rounded-md before:backdrop-blur-xl">
+                        <span class="relative text-sky-500">GiftShop</span>
+                    </span>
+                    Mobile App
+                </h1>
+                <p class="text-lg text-slate-500 dark:text-zink-200">
+                    Experience the most intuitive and delightful way to find and send perfect gifts to your loved ones.
+                </p>
+            </div>
+
+            <div class="grid items-center grid-cols-1 gap-12 mt-20 lg:grid-cols-12">
+                <div class="lg:col-span-5">
+                    <h2 class="mb-4 text-3xl leading-normal capitalize font-bold text-slate-800 dark:text-zink-50">
+                        Personalized Shopping Experience
+                    </h2>
+                    <p class="mb-6 text-lg text-slate-500 dark:text-zink-200">
+                        Our intelligent recommendation system learns your preferences and suggests the perfect gifts for every person and occasion in your life.
+                    </p>
+                    <button type="button" class="py-2.5 px-6 bg-custom-500 text-white border-custom-500 hover:bg-custom-600 hover:border-custom-600 focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:bg-custom-600 active:border-custom-600 rounded-lg transition-all duration-300 flex items-center space-x-2">
+                        <span class="align-middle">Explore Features</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="lg:col-span-6">
+                    <div class="relative">
+                        <div class="w-full h-80 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="w-24 h-24 bg-custom-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                    <i data-lucide="check" class="h-12 w-12 text-white transition animate-pulse"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-slate-700">Smart Recommendations</h3>
+                                <p class="text-slate-500 mt-2">AI-powered gift suggestions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid items-center grid-cols-1 gap-12 mt-32 lg:grid-cols-12">
+                <div class="lg:col-span-6">
+                    <div class="relative">
+                        <div class="w-full h-80 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="w-24 h-24 bg-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                    <i data-lucide="gift" class="w-12 h-12 text-white transition animate-pulse"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-slate-700">Gift Collections</h3>
+                                <p class="text-slate-500 mt-2">Curated gift categories</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-5">
+                    <h2 class="mb-4 text-3xl leading-normal capitalize font-bold text-slate-800 dark:text-zink-50">
+                        Curated Gift Collections
+                    </h2>
+                    <p class="mb-6 text-lg text-slate-500 dark:text-zink-200">
+                        Browse through our expertly curated collections for birthdays, anniversaries, holidays, and special occasions. Every gift is handpicked for quality and uniqueness.
+                    </p>
+                    <button type="button" class="py-2.5 px-6 bg-custom-500 text-white border-custom-500 hover:bg-custom-600 hover:border-custom-600 focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:bg-custom-600 active:border-custom-600 rounded-lg transition-all duration-300 flex items-center space-x-2">
+                        <span class="align-middle">Browse Collections</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid items-center grid-cols-1 gap-12 mt-32 lg:grid-cols-12">
+                <div class="lg:col-span-5">
+                    <h2 class="mb-4 text-3xl leading-normal capitalize font-bold text-slate-800 dark:text-zink-50">
+                        Seamless Mobile Experience
+                    </h2>
+                    <p class="mb-4 text-lg text-slate-500 dark:text-zink-200">
+                        Our mobile app provides an effortless shopping experience with intuitive navigation and beautiful design that makes gift shopping a joy.
+                    </p>
+                    <ul class="flex flex-col gap-3 mb-6 text-lg">
+                        <li class="flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            <span class="text-slate-700 dark:text-zink-200">Cross-platform compatibility</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            <span class="text-slate-700 dark:text-zink-200">Offline browsing capability</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            <span class="text-slate-700 dark:text-zink-200">Secure payment processing</span>
+                        </li>
+                    </ul>
+                    <button type="button" class="py-2.5 px-6 bg-custom-500 text-white border-custom-500 hover:bg-custom-600 hover:border-custom-600 focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:bg-custom-600 active:border-custom-600 rounded-lg transition-all duration-300 flex items-center space-x-2">
+                        <span class="align-middle">Learn More</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="lg:col-span-6">
+                    <div class="relative">
+                        <div class="w-full h-80 bg-gradient-to-br from-red-100 to-red-200 rounded-2xl flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="w-24 h-24 bg-red-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                    <i data-lucide="layout-template" class="h-12 w-12 text-white transition animate-pulse"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-slate-700">Mobile Optimized</h3>
+                                <p class="text-slate-500 mt-2">Perfect for any device</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <script src="{{ asset('admin/assets/libs/choices.js/public/assets/scripts/choices.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/@popperjs/core/umd/popper.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/tippy.js/tippy-bundle.umd.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/simplebar/simplebar.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/prismjs/prism.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/lucide/umd/lucide.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/tailwick.bundle.js') }}"></script>
-    <!--apexchart js-->
-    <script src="{{ asset('admin/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    </section>
 
-    <!--dashboard ecommerce init js-->
-    <script src="{{ asset('admin/assets/js/pages/dashboards-ecommerce.init.js') }}"></script>
+    <section class="relative py-20 bg-custom-600 dark:bg-custom-800" id="download">
+        <div class="absolute rotate-45 border border-dashed size-[500px] border-t-custom-500 border-l-custom-500 border-r-slate-700 border-b-slate-700 -bottom-[250px] rounded-full ltr:right-40 rtl:left-40 z-10 hidden lg:block"></div>
+        <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
+            <div class="grid items-center grid-cols-1 gap-8 lg:grid-cols-12">
+                <div class="lg:col-span-8">
+                    <h1 class="mb-4 text-4xl leading-normal capitalize text-custom-50 font-bold">
+                        Ready to Start Your Gift Shopping Journey?
+                    </h1>
+                    <p class="text-lg text-custom-200">
+                        Download our mobile app today and discover a world of perfect gifts waiting for you.
+                    </p>
+                </div>
+                <div class="ltr:lg:text-right rtl:lg:text-left lg:col-span-4">
+                    <div class="flex flex-col sm:flex-row lg:flex-col gap-4">
+                        <button type="button" class="py-3 px-6 text-base transition-all duration-200 ease-linear bg-white text-custom-500 border-white hover:bg-custom-50 hover:border-custom-50 rounded-lg flex items-center justify-center space-x-2 font-medium">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                            </svg>
+                            <span>Download for iOS</span>
+                        </button>
+                        <button type="button" class="py-3 px-6 text-base transition-all duration-200 ease-linear bg-white text-custom-500 border-white hover:bg-custom-50 hover:border-custom-50 rounded-lg flex items-center justify-center space-x-2 font-medium">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                            </svg>
+                            <span>Download for Android</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- App js -->
-    <script src="{{ asset('admin/assets/js/app.js') }}"></script>
+    <footer class="relative pt-20 pb-12 bg-slate-800 dark:bg-zink-700">
+        <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
+            <div class="relative z-10 grid grid-cols-12 gap-5 xl:grid-cols-12">
+                <div class="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-8 h-8 bg-custom-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
+                            </svg>
+                        </div>
+                        <h5 class="text-xl font-bold text-slate-50 dark:text-zink-50">GiftShop</h5>
+                    </div>
+                    <p class="text-slate-400 dark:text-zink-200 mb-6">
+                        Making every moment special with perfect gifts for every occasion.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#!" class="flex items-center justify-center w-10 h-10 transition-all duration-200 ease-linear border rounded-full text-slate-400 border-slate-700 hover:text-custom-500 hover:border-custom-500">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#!" class="flex items-center justify-center w-10 h-10 transition-all duration-200 ease-linear border rounded-full text-slate-400 border-slate-700 hover:text-custom-500 hover:border-custom-500">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                        <a href="#!" class="flex items-center justify-center w-10 h-10 transition-all duration-200 ease-linear border rounded-full text-slate-400 border-slate-700 hover:text-custom-500 hover:border-custom-500">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.719-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.347-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001.012.001z"/>
+                            </svg>
+                        </a>
+                        <a href="#!" class="flex items-center justify-center w-10 h-10 transition-all duration-200 ease-linear border rounded-full text-slate-400 border-slate-700 hover:text-custom-500 hover:border-custom-500">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3">
+                    <h5 class="mb-4 font-medium tracking-wider text-slate-50 dark:text-zink-50">Quick Links</h5>
+                    <ul class="flex flex-col gap-3 text-15">
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Gift Categories</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Occasions</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Gift Cards</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Custom Gifts</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Gift Wrapping</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3">
+                    <h5 class="mb-4 font-medium tracking-wider text-slate-50 dark:text-zink-50">Customer Care</h5>
+                    <ul class="flex flex-col gap-3 text-15">
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Help Center</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Shipping Info</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Returns</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Contact Us</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Track Order</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-2">
+                    <h5 class="mb-4 font-medium tracking-wider text-slate-50 dark:text-zink-50">Company</h5>
+                    <ul class="flex flex-col gap-3 text-15">
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">About Us</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Careers</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Press</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="relative inline-block transition-all duration-200 ease-linear text-slate-400 dark:text-zink-200 hover:text-slate-300 dark:hover:text-zink-50 before:absolute before:border-b before:border-slate-500 dark:before:border-zink-500 before:inset-x-0 before:bottom-0 before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-linear">Privacy Policy</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-span-12 md:col-span-6 lg:col-span-12 xl:col-span-4">
+                    <h5 class="mb-4 font-medium tracking-wider text-slate-50 dark:text-zink-50">Stay Updated</h5>
+                    <form action="#!" class="relative mb-6">
+                        <input type="email" class="py-3 ltr:pr-40 rtl:pl-40 bg-slate-700/60 dark:bg-zink-600/40 w-full rounded-lg text-slate-200 border-slate-700 dark:border-zink-500 focus:outline-none focus:border-custom-500 dark:focus:border-custom-500 placeholder:text-slate-500 dark:placeholder:text-zink-200 backdrop-blur-md" autocomplete="off" placeholder="your@email.com" required>
+                       <button type="submit" class="absolute px-6 py-2 text-base transition-all duration-200 ease-linear border-custom-500 bg-custom-500 ltr:right-1 rtl:left-1 text-custom-50 hover:text-custom-50 hover:bg-custom-600 hover:border-custom-600 top-1 bottom-1 rounded-md">Subscribe</button>
+                   </form>
+
+                   <p class="mb-1 text-slate-500 dark:text-zink-200 text-15">Support Email</p>
+                   <h5 class="text-lg !font-normal text-slate-200 dark:text-zink-50 mb-4">support@giftshop.com</h5>
+
+                   <p class="mb-1 text-slate-500 dark:text-zink-200 text-15">Contact Us</p>
+                   <h5 class="text-lg !font-normal text-slate-200 dark:text-zink-50">+1 (555) 123-4567</h5>
+               </div>
+           </div>
+
+           <div class="mt-12 text-center text-slate-400 dark:text-zink-200 text-16">
+               <p>
+                   <script>document.write(new Date().getFullYear())</script> © GiftShop. Made with ❤️ for gift lovers everywhere.
+               </p>
+           </div>
+       </div>
+   </footer>
+
+   <button id="back-to-top" class="fixed flex items-center justify-center w-10 h-10 text-white bg-custom-500 rounded-md bottom-10 right-10 opacity-0 pointer-events-none transition-all duration-300 hover:bg-custom-600">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+       </svg>
+   </button>
+
+   <script>
+       // Initialize Lucide icons
+       lucide.createIcons();
+       
+       // Back to top functionality
+       const backToTop = document.getElementById('back-to-top');
+       
+       window.addEventListener('scroll', () => {
+           if (window.pageYOffset > 300) {
+               backToTop.classList.add('opacity-100', 'pointer-events-auto');
+               backToTop.classList.remove('opacity-0', 'pointer-events-none');
+           } else {
+               backToTop.classList.add('opacity-0', 'pointer-events-none');
+               backToTop.classList.remove('opacity-100', 'pointer-events-auto');
+           }
+       });
+       
+       backToTop.addEventListener('click', () => {
+           window.scrollTo({ top: 0, behavior: 'smooth' });
+       });
+       
+       // Smooth scrolling for navigation links
+       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+           anchor.addEventListener('click', function (e) {
+               e.preventDefault();
+               const target = document.querySelector(this.getAttribute('href'));
+               if (target) {
+                   target.scrollIntoView({
+                       behavior: 'smooth',
+                       block: 'start'
+                   });
+               }
+           });
+       });
+
+       // Mobile menu toggle (if needed)
+       const mobileMenuButton = document.querySelector('.navbar-toggale-button button');
+       const mobileMenu = document.querySelector('.navbar-menu');
+       
+       if (mobileMenuButton && mobileMenu) {
+           mobileMenuButton.addEventListener('click', () => {
+               mobileMenu.classList.toggle('hidden');
+           });
+       }
+
+       // Navbar scroll effect
+       const navbar = document.getElementById('navbar');
+       window.addEventListener('scroll', () => {
+           if (window.scrollY > 50) {
+               navbar.classList.add('is-sticky');
+           } else {
+               navbar.classList.remove('is-sticky');
+           }
+       });
+   </script>
 
 </body>
-
 </html>

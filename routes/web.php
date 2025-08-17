@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\BrandController;
 
 Route::get('/', function () {
-    return view('admin.dashboard');
+    return view('home');
 })->name('welcome');
 
 // Admin Authentication Routes
