@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Services\Admin\ProductService;
 use App\Services\Admin\BrandService;
 use App\Services\Admin\CategoryService;
-use Illuminate\Http\Request;
+use App\Services\Admin\ProductService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
@@ -18,8 +18,7 @@ class ProductController extends Controller
         private ProductService $productService,
         private BrandService $brandService,
         private CategoryService $categoryService
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of products.
@@ -66,33 +65,35 @@ class ProductController extends Controller
                     'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
                     'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
                     'is_active' => 'boolean',
+                    'is_featured' => 'boolean',
                 ]);
-                
+
                 $validated['is_active'] = $request->has('is_active') || $request->input('is_active') == '1';
-                
+                $validated['is_featured'] = $request->has('is_featured') || $request->input('is_featured') == '1';
+
                 if ($request->hasFile('cover_image')) {
                     $validated['cover_image'] = $request->file('cover_image');
                 }
-                
+
                 if ($request->hasFile('images')) {
                     $validated['images'] = $request->file('images');
                 }
-                
+
                 $product = $this->productService->create($validated);
-                
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Product created successfully',
-                    'redirect' => route('admin.products.index')
+                    'redirect' => route('admin.products.index'),
                 ]);
             } catch (\Exception $e) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to create product: ' . $e->getMessage()
+                    'message' => 'Failed to create product: '.$e->getMessage(),
                 ], 422);
             }
         }
-        
+
         try {
             $validated = $request->validate([
                 'name_en' => 'required|string|max:255',
@@ -107,27 +108,29 @@ class ProductController extends Controller
                 'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
                 'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
                 'is_active' => 'boolean',
+                'is_featured' => 'boolean',
             ]);
-    
+
             $validated['is_active'] = $request->has('is_active') || $request->input('is_active') == '1';
-    
+            $validated['is_featured'] = $request->has('is_featured') || $request->input('is_featured') == '1';
+
             if ($request->hasFile('cover_image')) {
                 $validated['cover_image'] = $request->file('cover_image');
             }
-    
+
             if ($request->hasFile('images')) {
                 $validated['images'] = $request->file('images');
             }
-    
+
             $product = $this->productService->create($validated);
-    
+
             return redirect()->route('admin.products.index')
                 ->with('success', 'Product created successfully.');
-    
+
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
-                ->withErrors(['error' => 'Failed to create product: ' . $e->getMessage()]);
+                ->withErrors(['error' => 'Failed to create product: '.$e->getMessage()]);
         }
     }
 
@@ -165,46 +168,48 @@ class ProductController extends Controller
                     'description_ar' => 'nullable|string',
                     'price' => 'required|numeric|min:0',
                     'stock' => 'required|integer|min:0',
-                    'sku' => 'nullable|string|max:100|unique:products,sku,' . $product->id,
+                    'sku' => 'nullable|string|max:100|unique:products,sku,'.$product->id,
                     'category_id' => 'required|exists:categories,id',
                     'brand_id' => 'required|exists:brands,id',
                     'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
                     'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
                     'is_active' => 'boolean',
+                    'is_featured' => 'boolean',
                 ]);
-                
+
                 $validated['is_active'] = $request->has('is_active') || $request->input('is_active') == '1';
-                
+                $validated['is_featured'] = $request->has('is_featured') || $request->input('is_featured') == '1';
+
                 if ($request->hasFile('cover_image')) {
                     $validated['cover_image'] = $request->file('cover_image');
                 }
-                
+
                 if ($request->hasFile('images')) {
                     $validated['images'] = $request->file('images');
                 }
-                
+
                 // Handle image deletion
                 if ($request->has('delete_images')) {
                     $validated['delete_images'] = $request->input('delete_images');
                 }
-                
+
                 $product = $this->productService->update($product, $validated);
-                
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Product updated successfully',
-                    'redirect' => route('admin.products.index')
+                    'redirect' => route('admin.products.index'),
                 ]);
             } catch (\Exception $e) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to update product: ' . $e->getMessage()
+                    'message' => 'Failed to update product: '.$e->getMessage(),
                 ], 422);
             }
         }
-        
+
         // Debug to see if images are reaching the backend
-        
+
         try {
             $validated = $request->validate([
                 'name_en' => 'required|string|max:255',
@@ -213,34 +218,36 @@ class ProductController extends Controller
                 'description_ar' => 'nullable|string',
                 'price' => 'required|numeric|min:0',
                 'stock' => 'required|integer|min:0',
-                'sku' => 'nullable|string|max:100|unique:products,sku,' . $product->id,
+                'sku' => 'nullable|string|max:100|unique:products,sku,'.$product->id,
                 'category_id' => 'required|exists:categories,id',
                 'brand_id' => 'required|exists:brands,id',
                 'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
                 'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
                 'is_active' => 'boolean',
+                'is_featured' => 'boolean',
             ]);
             $validated['is_active'] = $request->has('is_active') || $request->input('is_active') == '1';
+            $validated['is_featured'] = $request->has('is_featured') || $request->input('is_featured') == '1';
 
             if ($request->hasFile('cover_image')) {
                 $validated['cover_image'] = $request->file('cover_image');
             }
-     
+
             if ($request->hasFile('images')) {
                 $validated['images'] = $request->file('images');
             }
-     
+
             $product = $this->productService->update($product, $validated);
-     
+
             return redirect()->route('admin.products.index')
                 ->with('success', 'Product updated successfully.');
-     
+
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
-                ->withErrors(['error' => 'Failed to update product: ' . $e->getMessage()]);
+                ->withErrors(['error' => 'Failed to update product: '.$e->getMessage()]);
         }
-     }    
+    }
 
     /**
      * Remove the specified product.
@@ -255,7 +262,7 @@ class ProductController extends Controller
 
         } catch (\Exception $e) {
             return redirect()->route('admin.products.index')
-                ->with('error', 'Failed to delete product: ' . $e->getMessage());
+                ->with('error', 'Failed to delete product: '.$e->getMessage());
         }
     }
 
@@ -267,13 +274,31 @@ class ProductController extends Controller
         try {
             $product = $this->productService->toggleStatus($product);
             $newStatus = $product->is_active ? 'active' : 'inactive';
-            
+
             return redirect()->route('admin.products.index')
                 ->with('success', "Product '{$product->name_en}' is now {$newStatus}.");
-                
+
         } catch (\Exception $e) {
             return redirect()->route('admin.products.index')
-                ->with('error', 'Failed to update product status: ' . $e->getMessage());
+                ->with('error', 'Failed to update product status: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Toggle product featured status.
+     */
+    public function toggleFeatured(Product $product): RedirectResponse
+    {
+        try {
+            $product = $this->productService->toggleFeatured($product);
+            $newStatus = $product->is_featured ? 'featured' : 'unfeatured';
+
+            return redirect()->route('admin.products.index')
+                ->with('success', "Product '{$product->name_en}' is now {$newStatus}.");
+
+        } catch (\Exception $e) {
+            return redirect()->route('admin.products.index')
+                ->with('error', 'Failed to update product featured status: '.$e->getMessage());
         }
     }
 
@@ -286,9 +311,7 @@ class ProductController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $products
+            'data' => $products,
         ]);
     }
-
-    
 }

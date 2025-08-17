@@ -19,6 +19,7 @@ class Product extends Model
         'stock',
         'cover_image_path',
         'is_active',
+        'is_featured',
         'sku',
         'slug',
     ];
@@ -28,6 +29,7 @@ class Product extends Model
         return [
             'price' => 'decimal:2',
             'is_active' => 'boolean',
+            'is_featured' => 'boolean',
         ];
     }
 
@@ -93,6 +95,14 @@ class Product extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    /**
+     * Scope a query to only include featured products.
+     */
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', true);
     }
 
     /**

@@ -70,12 +70,16 @@
                             <div class="shrink-0">
                                 <div
                                     class="flex items-center justify-center size-12 text-purple-500 bg-purple-100 rounded-md dark:bg-purple-500/20">
-                                    <i data-lucide="check-circle" class="size-5"></i>
+                                    <i data-lucide="package-check" class="size-5"></i>
                                 </div>
                             </div>
                             <div class="grow">
-                                <h5 class="mb-1 text-2xl leading-none">{{ $statistics['in_stock'] }}</h5>
-                                <p class="text-slate-500 dark:text-zink-200">In Stock</p>
+                                <div class="flex items-center gap-2">
+                                    <h5 class="mb-1 text-2xl leading-none text-purple-500">{{ $statistics['in_stock'] }}</h5>
+                                    <span class="text-sm text-slate-500">/</span>
+                                    <h5 class="mb-1 text-xl leading-none text-orange-500">{{ $statistics['out_of_stock'] }}</h5>
+                                </div>
+                                <p class="text-slate-500 dark:text-zink-200">In Stock / Out of Stock</p>
                             </div>
                         </div>
                     </div>
@@ -86,13 +90,13 @@
                         <div class="flex items-center gap-4">
                             <div class="shrink-0">
                                 <div
-                                    class="flex items-center justify-center size-12 text-orange-500 bg-orange-100 rounded-md dark:bg-orange-500/20">
-                                    <i data-lucide="x-circle" class="size-5"></i>
+                                    class="flex items-center justify-center size-12 text-yellow-500 bg-yellow-100 rounded-md dark:bg-yellow-500/20">
+                                    <i data-lucide="star" class="size-5"></i>
                                 </div>
                             </div>
                             <div class="grow">
-                                <h5 class="mb-1 text-2xl leading-none">{{ $statistics['out_of_stock'] }}</h5>
-                                <p class="text-slate-500 dark:text-zink-200">Out of Stock</p>
+                                <h5 class="mb-1 text-2xl leading-none">{{ $statistics['featured'] }}</h5>
+                                <p class="text-slate-500 dark:text-zink-200">Featured</p>
                             </div>
                         </div>
                     </div>
@@ -126,14 +130,27 @@
                                         class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
                                 </div>
 
-                                <div class="xl:col-span-2">
+                                <div class="xl:col-span-1">
                                     <select name="status"
                                         class="form-select border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                         <option value="">All Status</option>
-                                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active
+                                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>
+                                            Active
                                         </option>
                                         <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>
                                             Inactive</option>
+                                    </select>
+                                </div>
+
+                                <div class="xl:col-span-1">
+                                    <select name="featured"
+                                        class="form-select border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                                        <option value="">All Featured</option>
+                                        <option value="yes" {{ request('featured') === 'yes' ? 'selected' : '' }}>
+                                            Featured
+                                        </option>
+                                        <option value="no" {{ request('featured') === 'no' ? 'selected' : '' }}>
+                                            Not Featured</option>
                                     </select>
                                 </div>
 
@@ -200,6 +217,7 @@
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Price</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Stock</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Status</th>
+                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Featured</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Created At</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Action</th>
                                 </tr>
@@ -209,12 +227,16 @@
                                     <tr class="relative rounded-md after:absolute ltr:after:border-l-2 rtl:after:border-r-2 ltr:after:left-0 rtl:after:right-0 after:top-0 after:bottom-0 after:border-transparent [&.active]:after:border-custom-500 [&.active]:bg-slate-100 dark:[&.active]:bg-zink-600"
                                         data-id="{{ $product->id }}">
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                            <a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600 user-id">#PR{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</a>
+                                            <a href="#!"
+                                                class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600 user-id">#PR{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</a>
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 product-image">
-                                            <div class="flex items-center justify-center font-medium rounded-full size-10 shrink-0 bg-slate-200 text-slate-800 dark:text-zink-50 dark:bg-zink-600">
+                                            <div
+                                                class="flex items-center justify-center font-medium rounded-full size-10 shrink-0 bg-slate-200 text-slate-800 dark:text-zink-50 dark:bg-zink-600">
                                                 @if ($product->cover_image_path)
-                                                    <img src="{{ Storage::url($product->cover_image_path) }}" alt="{{ $product->name_en }}" class="h-10 w-10 rounded-full object-cover">
+                                                    <img src="{{ Storage::url($product->cover_image_path) }}"
+                                                        alt="{{ $product->name_en }}"
+                                                        class="h-10 w-10 rounded-full object-cover">
                                                 @else
                                                     <i data-lucide="image" class="size-5 text-slate-400"></i>
                                                 @endif
@@ -223,17 +245,20 @@
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <div>
                                                 <h6 class="mb-1 font-medium name-en">{{ $product->name_en }}</h6>
-                                                <p class="text-slate-500 dark:text-zink-200 name-ar">{{ $product->name_ar }}</p>
+                                                <p class="text-slate-500 dark:text-zink-200 name-ar">
+                                                    {{ $product->name_ar }}</p>
                                                 <p class="text-xs text-slate-400 sku">SKU: {{ $product->sku }}</p>
                                             </div>
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                            <span class="px-2.5 py-0.5 text-xs font-medium rounded border bg-slate-100 border-slate-200 text-slate-500 dark:bg-slate-500/20 dark:border-slate-500/20 dark:text-zink-200 category-name">
+                                            <span
+                                                class="px-2.5 py-0.5 text-xs font-medium rounded border bg-slate-100 border-slate-200 text-slate-500 dark:bg-slate-500/20 dark:border-slate-500/20 dark:text-zink-200 category-name">
                                                 {{ $product->category->name_en ?? 'N/A' }}
                                             </span>
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                            <span class="px-2.5 py-0.5 text-xs font-medium rounded border bg-blue-100 border-blue-200 text-blue-500 dark:bg-blue-500/20 dark:border-blue-500/20 dark:text-blue-200 brand-name">
+                                            <span
+                                                class="px-2.5 py-0.5 text-xs font-medium rounded border bg-blue-100 border-blue-200 text-blue-500 dark:bg-blue-500/20 dark:border-blue-500/20 dark:text-blue-200 brand-name">
                                                 {{ $product->brand->name_en ?? 'N/A' }}
                                             </span>
                                         </td>
@@ -241,8 +266,10 @@
                                             ${{ number_format($product->price, 2) }}
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $product->stock > 0 ? 'bg-green-100 text-green-500 dark:bg-green-500/20 dark:text-green-400' : 'bg-red-100 text-red-500 dark:bg-red-500/20 dark:text-red-400' }} stock">
-                                                {{ $product->stock }} {{ $product->stock > 0 ? 'in stock' : 'out of stock' }}
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $product->stock > 0 ? 'bg-green-100 text-green-500 dark:bg-green-500/20 dark:text-green-400' : 'bg-red-100 text-red-500 dark:bg-red-500/20 dark:text-red-400' }} stock">
+                                                {{ $product->stock }}
+                                                {{ $product->stock > 0 ? 'in stock' : 'out of stock' }}
                                             </span>
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
@@ -250,16 +277,33 @@
                                                 <button type="button"
                                                     class="status-toggle cursor-pointer inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $product->is_active ? 'bg-green-100 text-green-500 dark:bg-green-500/20 dark:border-transparent' : 'bg-red-100 text-red-500 dark:bg-red-500/20 dark:border-transparent' }}"
                                                     data-status="{{ $product->is_active ? 1 : 0 }}"
-                                                    data-id="{{ $product->id }}"
-                                                    data-name="{{ $product->name_en }}"
+                                                    data-id="{{ $product->id }}" data-name="{{ $product->name_en }}"
                                                     data-url="{{ route('admin.products.toggleStatus', $product) }}"
                                                     onclick="confirmToggleStatus(this)">
-                                                    <i data-lucide="{{ $product->is_active ? 'check-circle' : 'x-circle' }}" class="status-icon size-3 mr-1.5"></i>
-                                                    <span class="status-text">{{ $product->is_active ? 'Active' : 'Inactive' }}</span>
+                                                    <i data-lucide="{{ $product->is_active ? 'check-circle' : 'x-circle' }}"
+                                                        class="status-icon size-3 mr-1.5"></i>
+                                                    <span
+                                                        class="status-text">{{ $product->is_active ? 'Active' : 'Inactive' }}</span>
                                                 </button>
                                             </div>
                                         </td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">{{ $product->created_at->format('d M, Y') }}</td>
+                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
+                                            <div class="featured-toggle-container" data-id="{{ $product->id }}">
+                                                <button type="button"
+                                                    class="featured-toggle cursor-pointer inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $product->is_featured ? 'bg-yellow-100 text-yellow-500 dark:bg-yellow-500/20 dark:border-transparent' : 'bg-slate-100 text-slate-500 dark:bg-slate-500/20 dark:border-transparent' }}"
+                                                    data-featured="{{ $product->is_featured ? 1 : 0 }}"
+                                                    data-id="{{ $product->id }}" data-name="{{ $product->name_en }}"
+                                                    data-url="{{ route('admin.products.toggleFeatured', $product) }}"
+                                                    onclick="confirmToggleFeatured(this)">
+                                                    <i data-lucide="{{ $product->is_featured ? 'star' : 'star-off' }}"
+                                                        class="featured-icon size-3 mr-1.5"></i>
+                                                    <span
+                                                        class="featured-text">{{ $product->is_featured ? 'Featured' : 'Not Featured' }}</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
+                                            {{ $product->created_at->format('d M, Y') }}</td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <div class="relative dropdown">
                                                 <button
@@ -272,18 +316,21 @@
                                                     <li>
                                                         <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
                                                             href="{{ route('admin.products.edit', $product) }}">
-                                                            <i data-lucide="file-edit" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                            <i data-lucide="file-edit"
+                                                                class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
                                                             <span class="align-middle">Edit</span>
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST" style="display: inline;">
+                                                        <form action="{{ route('admin.products.destroy', $product) }}"
+                                                            method="POST" style="display: inline;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
                                                                 class="block w-full text-left px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
                                                                 onclick="return confirm('Are you sure you want to delete {{ addslashes($product->name_en) }}? This action cannot be undone.')">
-                                                                <i data-lucide="trash-2" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
+                                                                <i data-lucide="trash-2"
+                                                                    class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
                                                                 <span class="align-middle">Delete</span>
                                                             </button>
                                                         </form>
@@ -296,7 +343,8 @@
                                     <tr>
                                         <td colspan="10" class="px-3.5 py-8 text-center">
                                             <div class="py-6 text-center">
-                                                <i data-lucide="search" class="w-6 h-6 mx-auto text-sky-500 fill-sky-100 dark:fill-sky-500/20"></i>
+                                                <i data-lucide="search"
+                                                    class="w-6 h-6 mx-auto text-sky-500 fill-sky-100 dark:fill-sky-500/20"></i>
                                                 <h5 class="mt-2">Sorry! No Result Found</h5>
                                             </div>
                                         </td>
@@ -305,18 +353,16 @@
                             </tbody>
                         </table>
                     </div>
- 
+
                     {{-- Pagination --}}
                     <x-pagination :paginator="$products" />
                 </div>
             </div>
         </div>
     </div>
- @endsection
- 
- @push('scripts')
+@endsection
 
- 
+@push('scripts')
     <script src="{{ asset('admin/assets/js/status-toggle.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/featured-toggle.js') }}"></script>
 @endpush
-

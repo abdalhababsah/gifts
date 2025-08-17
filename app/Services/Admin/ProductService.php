@@ -2,14 +2,14 @@
 
 namespace App\Services\Admin;
 
-use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductService
 {
@@ -25,15 +25,20 @@ class ProductService
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name_en', 'like', "%{$search}%")
-                  ->orWhere('name_ar', 'like', "%{$search}%")
-                  ->orWhere('sku', 'like', "%{$search}%")
-                  ->orWhere('slug', 'like', "%{$search}%");
+                    ->orWhere('name_ar', 'like', "%{$search}%")
+                    ->orWhere('sku', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%");
             });
         }
 
         // Apply status filter
         if ($request->filled('status')) {
             $query->where('is_active', $request->status === 'active');
+        }
+
+        // Apply featured filter
+        if ($request->filled('featured')) {
+            $query->where('is_featured', $request->featured === 'yes');
         }
 
         // Apply stock filter
@@ -58,44 +63,42 @@ class ProductService
         // Apply sorting
         $sortBy = $request->get('sort_by', 'created_at');
         $sortDirection = $request->get('sort_direction', 'desc');
-        
-        if (in_array($sortBy, ['name_en', 'name_ar', 'sku', 'price', 'stock', 'is_active', 'created_at'])) {
+
+        if (in_array($sortBy, ['name_en', 'name_ar', 'sku', 'price', 'stock', 'is_active', 'is_featured', 'created_at'])) {
             $query->orderBy($sortBy, $sortDirection);
         }
 
         return $query->paginate($request->get('per_page', 15))
-                    ->withQueryString();
+            ->withQueryString();
     }
 
     /**
      * Create a new product.
      */
+    public function create(array $data): Product
+    {
+        $data['slug'] = $this->generateUniqueSlug($data['name_en']);
+        $data['sku'] = $this->generateUniqueSku($data['sku'] ?? null);
 
-public function create(array $data): Product
-{
-    $data['slug'] = $this->generateUniqueSlug($data['name_en']);
-    $data['sku'] = $this->generateUniqueSku($data['sku'] ?? null);
-    
-    // Handle cover image upload
-    if (isset($data['cover_image']) && $data['cover_image'] instanceof UploadedFile) {
-        $data['cover_image_path'] = $this->storeCoverImage($data['cover_image']);
-        unset($data['cover_image']);
-    }
-    
-    // Handle multiple images
-    $images = $data['images'] ?? [];
-    unset($data['images']);
-    
-    $product = Product::create($data);
-    
-    // Store additional images
-    if (!empty($images)) {
-        $this->handleProductImages($product, $images);
-    }
-    
-    return $product;
-}
+        // Handle cover image upload
+        if (isset($data['cover_image']) && $data['cover_image'] instanceof UploadedFile) {
+            $data['cover_image_path'] = $this->storeCoverImage($data['cover_image']);
+            unset($data['cover_image']);
+        }
 
+        // Handle multiple images
+        $images = $data['images'] ?? [];
+        unset($data['images']);
+
+        $product = Product::create($data);
+
+        // Store additional images
+        if (! empty($images)) {
+            $this->handleProductImages($product, $images);
+        }
+
+        return $product;
+    }
 
     public function update(Product $product, array $data): Product
     {
@@ -115,13 +118,13 @@ public function create(array $data): Product
             if ($product->cover_image_path) {
                 $this->deleteCoverImage($product->cover_image_path);
             }
-            
+
             $data['cover_image_path'] = $this->storeCoverImage($data['cover_image']);
             unset($data['cover_image']);
         }
 
         // Handle image deletion
-        if (isset($data['delete_images']) && !empty($data['delete_images'])) {
+        if (isset($data['delete_images']) && ! empty($data['delete_images'])) {
             foreach ($data['delete_images'] as $imageId) {
                 $image = $product->images()->find($imageId);
                 if ($image) {
@@ -141,14 +144,14 @@ public function create(array $data): Product
         unset($data['images']);
 
         $product->update($data);
-        
+
         // Store additional images
-        if (!empty($images)) {
+        if (! empty($images)) {
             $this->handleProductImages($product, $images);
         }
-        
+
         return $product->refresh();
-}
+    }
 
     /**
      * Delete a product.
@@ -168,8 +171,18 @@ public function create(array $data): Product
      */
     public function toggleStatus(Product $product): Product
     {
-        $product->update(['is_active' => !$product->is_active]);
-        
+        $product->update(['is_active' => ! $product->is_active]);
+
+        return $product->refresh();
+    }
+
+    /**
+     * Toggle product featured status.
+     */
+    public function toggleFeatured(Product $product): Product
+    {
+        $product->update(['is_featured' => ! $product->is_featured]);
+
         return $product->refresh();
     }
 
@@ -179,8 +192,8 @@ public function create(array $data): Product
     public function getForSelect(): \Illuminate\Database\Eloquent\Collection
     {
         return Product::active()
-                     ->orderBy('name_en')
-                     ->get(['id', 'name_en', 'name_ar', 'sku']);
+            ->orderBy('name_en')
+            ->get(['id', 'name_en', 'name_ar', 'sku']);
     }
 
     /**
@@ -209,7 +222,7 @@ public function create(array $data): Product
         $counter = 1;
 
         while ($this->slugExists($slug, $excludeId)) {
-            $slug = $originalSlug . '-' . $counter;
+            $slug = $originalSlug.'-'.$counter;
             $counter++;
         }
 
@@ -222,11 +235,11 @@ public function create(array $data): Product
     private function slugExists(string $slug, ?int $excludeId = null): bool
     {
         $query = Product::where('slug', $slug);
-        
+
         if ($excludeId) {
             $query->where('id', '!=', $excludeId);
         }
-        
+
         return $query->exists();
     }
 
@@ -235,15 +248,15 @@ public function create(array $data): Product
      */
     private function generateUniqueSku(?string $sku = null, ?int $excludeId = null): string
     {
-        if (!$sku) {
-            $sku = 'PRD-' . strtoupper(Str::random(6));
+        if (! $sku) {
+            $sku = 'PRD-'.strtoupper(Str::random(6));
         }
-        
+
         $originalSku = $sku;
         $counter = 1;
 
         while ($this->skuExists($sku, $excludeId)) {
-            $sku = $originalSku . '-' . $counter;
+            $sku = $originalSku.'-'.$counter;
             $counter++;
         }
 
@@ -256,11 +269,11 @@ public function create(array $data): Product
     private function skuExists(string $sku, ?int $excludeId = null): bool
     {
         $query = Product::where('sku', $sku);
-        
+
         if ($excludeId) {
             $query->where('id', '!=', $excludeId);
         }
-        
+
         return $query->exists();
     }
 
@@ -273,22 +286,23 @@ public function create(array $data): Product
             'total' => Product::count(),
             'active' => Product::where('is_active', true)->count(),
             'inactive' => Product::where('is_active', false)->count(),
+            'featured' => Product::where('is_featured', true)->count(),
             'in_stock' => Product::where('stock', '>', 0)->count(),
             'out_of_stock' => Product::where('stock', '<=', 0)->count(),
         ];
     }
 
     private function handleProductImages(Product $product, array $images): void
-{
-    foreach ($images as $image) {
-        if ($image instanceof UploadedFile) {
-            $imagePath = $image->store('products/gallery', 'public');
-            
-            $product->images()->create([
-                'image_path' => $imagePath,
-                'is_primary' => false
-            ]);
+    {
+        foreach ($images as $image) {
+            if ($image instanceof UploadedFile) {
+                $imagePath = $image->store('products/gallery', 'public');
+
+                $product->images()->create([
+                    'image_path' => $imagePath,
+                    'is_primary' => false,
+                ]);
+            }
         }
     }
-}
 }

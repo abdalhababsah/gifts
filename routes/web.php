@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\BrandController;
 
 Route::get('/', function () {
     return view('home');
@@ -23,7 +23,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-        
+
         // Categories Management
         Route::prefix('categories')->name('categories.')->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('index');
@@ -34,7 +34,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::patch('/{category}/toggle-status', [CategoryController::class, 'toggleStatus'])->name('toggleStatus');
             Route::get('/select/options', [CategoryController::class, 'getForSelect'])->name('select');
         });
-        
+
         // Brands Management
         Route::prefix('brands')->name('brands.')->group(function () {
             Route::get('/', [BrandController::class, 'index'])->name('index');
@@ -46,9 +46,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/select/options', [BrandController::class, 'getForSelect'])->name('select');
         });
 
-            Route::resource('products', ProductController::class)->names('products');
-            Route::patch('products/{product}/toggle-status', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
-            Route::get('products-for-select', [ProductController::class, 'getForSelect'])->name('products.getForSelect');
+        Route::resource('products', ProductController::class)->names('products');
+        Route::patch('products/{product}/toggle-status', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
+        Route::patch('products/{product}/toggle-featured', [ProductController::class, 'toggleFeatured'])->name('products.toggleFeatured');
+        Route::get('products-for-select', [ProductController::class, 'getForSelect'])->name('products.getForSelect');
     });
 });
 
@@ -60,11 +61,12 @@ Route::get('/login', function () {
 // Test admin route without middleware (for comparison)
 Route::get('/admin/test', function () {
     $user = auth()->user();
+
     return response()->json([
         'message' => 'Test route without middleware',
         'authenticated' => auth()->check(),
         'user' => $user ? $user->load('role') : null,
-        'is_admin' => $user ? ($user->role_id === 1) : false
+        'is_admin' => $user ? ($user->role_id === 1) : false,
     ]);
 })->name('admin.test');
 

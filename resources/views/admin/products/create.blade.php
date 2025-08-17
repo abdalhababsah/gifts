@@ -178,7 +178,7 @@
                                         </div>
 
                                         {{-- Status --}}
-                                        <div class="xl:col-span-4">
+                                        <div class="xl:col-span-2">
                                             <label for="is_active" class="inline-block mb-2 text-base font-medium">Status</label>
                                             <select id="is_active" name="is_active"
                                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -187,6 +187,20 @@
                                                 <option value="0" {{ old('is_active') == 0 ? 'selected' : '' }}>Inactive</option>
                                             </select>
                                             @error('is_active')
+                                                <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        
+                                        {{-- Featured --}}
+                                        <div class="xl:col-span-2">
+                                            <label for="is_featured" class="inline-block mb-2 text-base font-medium">Featured</label>
+                                            <select id="is_featured" name="is_featured"
+                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                data-choices data-choices-search-false>
+                                                <option value="0" {{ old('is_featured', 0) == 0 ? 'selected' : '' }}>No</option>
+                                                <option value="1" {{ old('is_featured') == 1 ? 'selected' : '' }}>Yes</option>
+                                            </select>
+                                            @error('is_featured')
                                                 <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
                                             @enderror
                                         </div>

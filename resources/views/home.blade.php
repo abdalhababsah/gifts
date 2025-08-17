@@ -83,7 +83,7 @@
         </div>
     </nav>
 
-    <section class="relative pb-36 pt-44" id="home">
+    <section class="relative pb-36 pt-24 lg:pt-44" id="home">
         <div class="absolute rotate-45 border border-dashed size-[500px] border-t-slate-300 dark:border-t-zink-500 border-l-slate-300 dark:border-l-zink-500 border-r-slate-700 dark:border-r-zink-400 border-b-slate-700 dark:border-b-zink-400 -bottom-[250px] rounded-full ltr:right-40 rtl:left-40 z-10 hidden lg:block"></div>
         <div class="absolute rotate-45 border border-dashed size-[700px] border-t-slate-300 dark:border-t-zink-500 border-l-slate-300 dark:border-l-zink-500 border-r-slate-700 dark:border-r-zink-400 border-b-slate-700 dark:border-b-zink-400 -bottom-[350px] rounded-full ltr:right-16 rtl:left-16 z-10 hidden 2xl:block"></div>
         <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
@@ -316,7 +316,7 @@
                 </div>
             </div>
 
-            <div class="grid items-center grid-cols-1 gap-12 mt-32 lg:grid-cols-12">
+            <div class="grid items-center grid-cols-1 gap-12 mt-20 lg:grid-cols-12">
                 <div class="lg:col-span-6">
                     <div class="relative">
                         <div class="w-full h-80 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center">
@@ -346,7 +346,7 @@
                 </div>
             </div>
 
-            <div class="grid items-center grid-cols-1 gap-12 mt-32 lg:grid-cols-12">
+            <div class="grid items-center grid-cols-1 gap-12 mt-20 lg:grid-cols-12">
                 <div class="lg:col-span-5">
                     <h2 class="mb-4 text-3xl leading-normal capitalize font-bold text-slate-800 dark:text-zink-50">
                         Seamless Mobile Experience
