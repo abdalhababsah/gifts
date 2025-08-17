@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Mail\PasswordResetCodeMail;
+use App\Mail\VerificationCodeMail;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -23,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'phone_number',
         'password',
         'fcm_token',
         'role_id',
@@ -98,5 +103,68 @@ class User extends Authenticatable implements MustVerifyEmail
     public function supportTicketMessages(): HasMany
     {
         return $this->hasMany(SupportTicketMessage::class, 'sender_id');
+    }
+
+    /**
+     * Get all verification codes for this user.
+     */
+    public function verificationCodes(): HasMany
+    {
+        return $this->hasMany(EmailVerificationCode::class);
+    }
+
+    /**
+     * Send the email verification code.
+     */
+    public function sendEmailVerificationCode(): void
+    {
+        // Invalidate old verification codes
+        $this->verificationCodes()
+            ->where('used', false)
+            ->update(['used' => true]);
+
+        // Generate a new code
+        $code = EmailVerificationCode::generateCode();
+
+        // Store the code
+        $this->verificationCodes()->create([
+            'code' => $code,
+            'expires_at' => Carbon::now()->addMinutes(60), // Code expires in 60 minutes
+        ]);
+
+        // Send the code via email
+        Mail::to($this->email)->send(new VerificationCodeMail($this, $code));
+    }
+
+    /**
+     * Send the email verification notification.
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->sendEmailVerificationCode();
+    }
+
+    /**
+     * Send a password reset code to the user.
+     */
+    public static function sendPasswordResetCode(string $email): void
+    {
+        // Invalidate old password reset codes
+        PasswordResetCode::where('email', $email)
+            ->where('used', false)
+            ->update(['used' => true]);
+
+        // Generate a new code
+        $code = PasswordResetCode::generateCode();
+
+        // Store the code
+        PasswordResetCode::create([
+            'email' => $email,
+            'code' => $code,
+            'expires_at' => Carbon::now()->addMinutes(60), // Code expires in 60 minutes
+        ]);
+
+        // Send the code via email
+        Mail::to($email)->send(new PasswordResetCodeMail($email, $code));
     }
 }
