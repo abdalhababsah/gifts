@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             CitySeeder::class,
             DeliveryTimeSlotSeeder::class,
+            CategorySeeder::class,
+            BrandSeeder::class,
+            ProductSeeder::class,
         ]);
 
         // Create admin user

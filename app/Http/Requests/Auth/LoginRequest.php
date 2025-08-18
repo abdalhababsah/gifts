@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
@@ -28,8 +29,43 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'password' => [
+                'required',
+                'string',
+                Password::min(8)
+                    ->letters()           // Must contain letters
+                    ->mixedCase()         // Must contain both upper and lower case
+                    ->numbers()           // Must contain numbers
+                    ->symbols()           // Must contain symbols
+            ],
         ];
+    }
+
+    /**
+     * Get custom validation messages.
+     */
+    public function messages(): array
+    {
+        $locale = app()->getLocale();
+
+        $validationMessages = [
+            'en' => [
+                'email.required' => 'Email address is required',
+                'email.email' => 'Please enter a valid email address',
+                'password.required' => 'Password is required',
+                'password.min' => 'Password must be at least 8 characters long',
+                'password' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)',
+            ],
+            'ar' => [
+                'email.required' => 'عنوان البريد الإلكتروني مطلوب',
+                'email.email' => 'يرجى إدخال عنوان بريد إلكتروني صحيح',
+                'password.required' => 'كلمة المرور مطلوبة',
+                'password.min' => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل',
+                'password' => 'كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل، وحرف صغير واحد، ورقم واحد، ورمز خاص واحد (@$!%*?&)',
+            ],
+        ];
+
+        return $validationMessages[$locale] ?? $validationMessages['en'];
     }
 
     /**
@@ -44,8 +80,14 @@ class LoginRequest extends FormRequest
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
+            $locale = app()->getLocale();
+            $errorMessages = [
+                'en' => 'The provided credentials are incorrect.',
+                'ar' => 'بيانات الاعتماد المقدمة غير صحيحة.',
+            ];
+
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'email' => $errorMessages[$locale] ?? $errorMessages['en'],
             ]);
         }
 
@@ -66,12 +108,17 @@ class LoginRequest extends FormRequest
         event(new Lockout($this));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
+        $locale = app()->getLocale();
+
+        $throttleMessages = [
+            'en' => 'Too many login attempts. Please try again in :seconds seconds.',
+            'ar' => 'محاولات تسجيل دخول كثيرة جداً. يرجى المحاولة مرة أخرى خلال :seconds ثانية.',
+        ];
+
+        $message = str_replace(':seconds', $seconds, $throttleMessages[$locale] ?? $throttleMessages['en']);
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
+            'email' => $message,
         ]);
     }
 

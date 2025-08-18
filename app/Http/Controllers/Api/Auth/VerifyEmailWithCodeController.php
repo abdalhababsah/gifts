@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Models\EmailVerificationCode;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Verified;
@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-class VerifyEmailWithCodeController extends Controller
+class VerifyEmailWithCodeController extends ApiController
 {
     /**
      * Verify email with OTP code
@@ -20,7 +20,7 @@ class VerifyEmailWithCodeController extends Controller
      */
     public function verify(Request $request): JsonResponse
     {
-        $locale = $this->getLocale($request);
+        $locale = $this->getLocale();
 
         $validationMessages = [
             'en' => [
@@ -47,7 +47,7 @@ class VerifyEmailWithCodeController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $messages[$locale],
+                'message' => $this->getLocalizedMessage($messages),
             ]);
         }
 
@@ -64,7 +64,7 @@ class VerifyEmailWithCodeController extends Controller
             ];
 
             throw ValidationException::withMessages([
-                'code' => [$errorMessages[$locale]],
+                'code' => [$this->getLocalizedMessage($errorMessages)],
             ]);
         }
 
@@ -82,7 +82,7 @@ class VerifyEmailWithCodeController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $successMessages[$locale],
+            'message' => $this->getLocalizedMessage($successMessages),
         ]);
     }
 
@@ -91,7 +91,6 @@ class VerifyEmailWithCodeController extends Controller
      */
     public function resend(Request $request): JsonResponse
     {
-        $locale = $this->getLocale($request);
         $user = Auth::user();
 
         if ($user->hasVerifiedEmail()) {
@@ -102,7 +101,7 @@ class VerifyEmailWithCodeController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $messages[$locale],
+                'message' => $this->getLocalizedMessage($messages),
             ]);
         }
 
@@ -116,17 +115,7 @@ class VerifyEmailWithCodeController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $successMessages[$locale],
+            'message' => $this->getLocalizedMessage($successMessages),
         ]);
-    }
-
-    /**
-     * Get locale from request headers
-     */
-    private function getLocale(Request $request): string
-    {
-        $locale = $request->header('Accept-Language', 'en');
-
-        return in_array($locale, ['ar', 'en']) ? $locale : 'en';
     }
 }

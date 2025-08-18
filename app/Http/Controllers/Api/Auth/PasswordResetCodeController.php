@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class PasswordResetCodeController extends Controller
+class PasswordResetCodeController extends ApiController
 {
     /**
      * Handle an incoming password reset code request.
@@ -17,7 +17,7 @@ class PasswordResetCodeController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $locale = $this->getLocale($request);
+        $locale = $this->getLocale();
 
         $validationMessages = [
             'en' => [
@@ -43,7 +43,7 @@ class PasswordResetCodeController extends Controller
             ];
 
             throw ValidationException::withMessages([
-                'email' => [$errorMessages[$locale]],
+                'email' => [$this->getLocalizedMessage($errorMessages)],
             ]);
         }
 
@@ -57,17 +57,7 @@ class PasswordResetCodeController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $successMessages[$locale],
+            'message' => $this->getLocalizedMessage($successMessages),
         ], 200);
-    }
-
-    /**
-     * Get locale from request headers
-     */
-    private function getLocale(Request $request): string
-    {
-        $locale = $request->header('Accept-Language', 'en');
-
-        return in_array($locale, ['ar', 'en']) ? $locale : 'en';
     }
 }

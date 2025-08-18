@@ -218,7 +218,6 @@
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Stock</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Status</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Featured</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Created At</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Action</th>
                                 </tr>
                             </thead>
@@ -302,8 +301,6 @@
                                                 </button>
                                             </div>
                                         </td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                            {{ $product->created_at->format('d M, Y') }}</td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <div class="relative dropdown">
                                                 <button

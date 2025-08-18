@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthenticatedSessionController extends Controller
+class AuthenticatedSessionController extends ApiController
 {
     /**
      * Handle an incoming authentication request.
@@ -21,8 +21,6 @@ class AuthenticatedSessionController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        $locale = $this->getLocale($request);
-
         $messages = [
             'en' => 'Login successful',
             'ar' => 'تم تسجيل الدخول بنجاح',
@@ -30,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $messages[$locale],
+            'message' => $this->getLocalizedMessage($messages),
             'user' => $user,
             'token' => $token,
         ], 200);
@@ -46,8 +44,6 @@ class AuthenticatedSessionController extends Controller
             $request->user()->currentAccessToken()->delete();
         }
 
-        $locale = $this->getLocale($request);
-
         $messages = [
             'en' => 'Logged out successfully',
             'ar' => 'تم تسجيل الخروج بنجاح',
@@ -55,17 +51,7 @@ class AuthenticatedSessionController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $messages[$locale],
+            'message' => $this->getLocalizedMessage($messages),
         ], 200);
-    }
-
-    /**
-     * Get locale from request headers
-     */
-    private function getLocale(Request $request): string
-    {
-        $locale = $request->header('Accept-Language', 'en');
-
-        return in_array($locale, ['ar', 'en']) ? $locale : 'en';
     }
 }

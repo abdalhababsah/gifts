@@ -157,7 +157,6 @@
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Slug</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Products Count</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Status</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Created At</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Action</th>
                                 </tr>
                             </thead>
@@ -210,8 +209,6 @@
                                                 </button>
                                             </div>
                                         </td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
-                                            {{ $brand->created_at->format('d M, Y') }}</td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <div class="relative dropdown">
                                                 <button
