@@ -1,270 +1,304 @@
 {
 	"info": {
-		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-		"name": "Gifts API Collection",
-		"description": "API collection for the Gifts e-commerce application",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	  "name": "E-Commerce Cart & Wishlist API (Unified Guest+Auth)",
+	  "_postman_id": "f8c9a2f0-5f5d-4a0b-92b7-8f8f0b3d0abc",
+	  "description": "Unified collection. If {{token}} is set, requests are authenticated (Sanctum PAT/session). If not set, requests run as guest and use cookies.",
+	  "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
-	"item": [
-		{
-			"name": "Categories",
-			"item": [
-				{
-					"name": "Get All Categories",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept-Language",
-								"value": "en",
-								"type": "text",
-								"description": "Change to 'ar' for Arabic responses"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/categories",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"categories"
-							]
-						},
-						"description": "Get a list of all active categories with names in the specified language (English or Arabic)."
-					},
-					"response": []
-				}
-			],
-			"description": "Endpoints for managing categories"
-		},
-		{
-			"name": "Brands",
-			"item": [
-				{
-					"name": "Get All Brands",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept-Language",
-								"value": "en",
-								"type": "text",
-								"description": "Change to 'ar' for Arabic responses"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/brands",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"brands"
-							]
-						},
-						"description": "Get a list of all active brands with names in the specified language (English or Arabic)."
-					},
-					"response": []
-				}
-			],
-			"description": "Endpoints for managing brands"
-		},
-		{
-			"name": "Products",
-			"item": [
-				{
-					"name": "Get All Products",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept-Language",
-								"value": "en",
-								"type": "text",
-								"description": "Change to 'ar' for Arabic responses"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/products",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"products"
-							]
-						},
-						"description": "Get a list of all active products with names in the specified language (English or Arabic)."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Products with Filters",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept-Language",
-								"value": "en",
-								"type": "text",
-								"description": "Change to 'ar' for Arabic responses"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/products?search=gift&brand_id=1&category_id=2&sort=price_asc&per_page=16",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"products"
-							],
-							"query": [
-								{
-									"key": "search",
-									"value": "gift",
-									"description": "Search term for product names (in both English and Arabic)"
-								},
-								{
-									"key": "brand_id",
-									"value": "1",
-									"description": "Filter by brand ID"
-								},
-								{
-									"key": "category_id",
-									"value": "2",
-									"description": "Filter by category ID"
-								},
-								{
-									"key": "sort",
-									"value": "price_asc",
-									"description": "Sort by price (price_asc or price_desc)"
-								},
-								{
-									"key": "per_page",
-									"value": "16",
-									"description": "Number of products per page (default: 16, max: 50)"
-								}
-							]
-						},
-						"description": "Get a filtered list of products with various query parameters."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Featured Products",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept-Language",
-								"value": "en",
-								"type": "text",
-								"description": "Change to 'ar' for Arabic responses"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/products/featured",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"products",
-								"featured"
-							]
-						},
-						"description": "Get a list of featured products (max 9)."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Product by ID",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept-Language",
-								"value": "en",
-								"type": "text",
-								"description": "Change to 'ar' for Arabic responses"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/products/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"products",
-								"1"
-							]
-						},
-						"description": "Get details of a specific product by its ID."
-					},
-					"response": []
-				}
-			],
-			"description": "Endpoints for managing products"
-		}
-	],
 	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
+	  {
+		"listen": "prerequest",
+		"script": {
+		  "type": "text/javascript",
+		  "exec": [
+			"const envToken = pm.environment.get('token');",
+			"const colToken = pm.collectionVariables.get('token');",
+			"const token = (envToken && envToken.trim()) ? envToken : (colToken && colToken.trim()) ? colToken : '';",
+			"",
+			"// Apply Bearer only if token is provided; otherwise ensure no Authorization header (guest).",
+			"if (token) {",
+			"  pm.request.headers.upsert({ key: 'Authorization', value: `Bearer ${token}`, disabled: false });",
+			"} else {",
+			"  pm.request.headers.remove('Authorization');",
+			"}",
+			"",
+			"// Tip: For pure guest runs, clear cookies for {{base_url}} in Postman if you previously authenticated."
+		  ]
 		}
+	  }
+	],
+	"item": [
+	  {
+		"name": "Cart",
+		"item": [
+		  {
+			"name": "Add item",
+			"request": {
+			  "method": "POST",
+			  "header": [
+				{ "key": "Content-Type", "value": "application/json" }
+			  ],
+			  "url": { "raw": "{{base_url}}/cart", "host": ["{{base_url}}"], "path": ["cart"] },
+			  "body": { "mode": "raw", "raw": "{\n  \"product_id\": {{product_id}},\n  \"quantity\": {{quantity}}\n}" },
+			  "description": "Adds a product to cart. Guest: cookie-based. Auth: DB-based. Same response shape."
+			},
+			"response": [
+			  {
+				"name": "201 Created – added",
+				"status": "Created",
+				"code": 201,
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": "{\n  \"success\": true,\n  \"message\": \"Product added to cart successfully\",\n  \"action\": \"added\",\n  \"cart_item\": {\n    \"id\": \"guest_12\",\n    \"product\": { \"id\": 12, \"name_en\": \"Sneaker\", \"price\": 19.99, \"stock\": 7 },\n    \"quantity\": 1,\n    \"added_at\": \"2025-08-26T09:10:12.123Z\",\n    \"total_price\": 19.99\n  }\n}"
+			  },
+			  {
+				"name": "201 Created – updated quantity",
+				"status": "Created",
+				"code": 201,
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": "{\n  \"success\": true,\n  \"message\": \"Cart updated successfully\",\n  \"action\": \"updated\",\n  \"cart_item\": {\n    \"id\": 321,\n    \"product\": { \"id\": 12, \"name_en\": \"Sneaker\", \"price\": 19.99, \"stock\": 7 },\n    \"quantity\": 3,\n    \"added_at\": \"2025-08-26T09:12:40.456Z\",\n    \"total_price\": 59.97\n  }\n}"
+			  },
+			  {
+				"name": "422 – PRODUCT_NOT_FOUND",
+				"status": "Unprocessable Entity",
+				"code": 422,
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": "{\n  \"success\": false,\n  \"message\": \"Product not found or inactive\",\n  \"error_code\": \"PRODUCT_NOT_FOUND\"\n}"
+			  },
+			  {
+				"name": "422 – INSUFFICIENT_STOCK",
+				"status": "Unprocessable Entity",
+				"code": 422,
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": "{\n  \"success\": false,\n  \"message\": \"Only 2 items available in stock\",\n  \"error_code\": \"INSUFFICIENT_STOCK\",\n  \"available_stock\": 2\n}"
+			  }
+			]
+		  },
+		  {
+			"name": "Get items",
+			"request": {
+			  "method": "GET",
+			  "url": { "raw": "{{base_url}}/cart", "host": ["{{base_url}}"], "path": ["cart"] },
+			  "description": "Returns current cart with totals. Same shape for guest and auth."
+			},
+			"response": [
+			  {
+				"name": "200 OK – items",
+				"status": "OK",
+				"code": 200,
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": "{\n  \"success\": true,\n  \"cart_items\": [\n    {\n      \"id\": 321,\n      \"product\": { \"id\": 12, \"name_en\": \"Sneaker\", \"price\": 19.99, \"stock\": 7 },\n      \"quantity\": 3,\n      \"added_at\": \"2025-08-26T09:26:10.000Z\",\n      \"total_price\": 59.97,\n      \"stock_issue\": null\n    }\n  ],\n  \"total_items\": 3,\n  \"total_amount\": 59.97,\n  \"has_stock_issues\": false,\n  \"currency\": \"JOD\"\n}"
+			  }
+			]
+		  },
+		  {
+			"name": "Update quantity",
+			"request": {
+			  "method": "PUT",
+			  "header": [{ "key": "Content-Type", "value": "application/json" }],
+			  "url": { "raw": "{{base_url}}/cart/{{product_id}}", "host": ["{{base_url}}"], "path": ["cart", "{{product_id}}"] },
+			  "body": { "mode": "raw", "raw": "{\n  \"quantity\": 2\n}" },
+			  "description": "Sets exact quantity for a product in the cart."
+			},
+			"response": [
+			  {
+				"name": "200 OK – updated",
+				"status": "OK",
+				"code": 200,
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": "{\n  \"success\": true,\n  \"message\": \"Cart updated successfully\",\n  \"action\": \"updated\",\n  \"cart_item\": {\n    \"id\": \"guest_12\",\n    \"product\": { \"id\": 12, \"name_en\": \"Sneaker\", \"price\": 19.99, \"stock\": 7 },\n    \"quantity\": 2,\n    \"added_at\": \"2025-08-26T09:15:30.000Z\",\n    \"total_price\": 39.98\n  }\n}"
+			  },
+			  {
+				"name": "422 – ITEM_NOT_IN_CART",
+				"status": "Unprocessable Entity",
+				"code": 422,
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": "{\n  \"success\": false,\n  \"message\": \"Product not found in cart\",\n  \"error_code\": \"ITEM_NOT_IN_CART\"\n}"
+			  },
+			  {
+				"name": "422 – INSUFFICIENT_STOCK",
+				"status": "Unprocessable Entity",
+				"code": 422,
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": "{\n  \"success\": false,\n  \"message\": \"Only 1 items available in stock\",\n  \"error_code\": \"INSUFFICIENT_STOCK\",\n  \"available_stock\": 1\n}"
+			  }
+			]
+		  },
+		  {
+			"name": "Remove item",
+			"request": {
+			  "method": "DELETE",
+			  "url": { "raw": "{{base_url}}/cart/{{product_id}}", "host": ["{{base_url}}"], "path": ["cart", "{{product_id}}"] },
+			  "description": "Removes a single product from the cart."
+			},
+			"response": [
+			  {
+				"name": "200 OK – removed",
+				"status": "OK",
+				"code": 200,
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": "{ \"success\": true, \"message\": \"Product removed from cart successfully\" }"
+			  },
+			  {
+				"name": "422 – ITEM_NOT_IN_CART",
+				"status": "Unprocessable Entity",
+				"code": 422,
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": "{ \"success\": false, \"message\": \"Product not found in cart\", \"error_code\": \"ITEM_NOT_IN_CART\" }"
+			  }
+			]
+		  },
+		  {
+			"name": "Clear",
+			"request": {
+			  "method": "DELETE",
+			  "url": { "raw": "{{base_url}}/cart", "host": ["{{base_url}}"], "path": ["cart"] },
+			  "description": "Clears entire cart."
+			},
+			"response": [
+			  {
+				"name": "200 OK – cleared",
+				"status": "OK",
+				"code": 200,
+				"body": "{ \"success\": true, \"message\": \"Cart cleared successfully\" }"
+			  }
+			]
+		  },
+		  {
+			"name": "Count (distinct products)",
+			"request": {
+			  "method": "GET",
+			  "url": { "raw": "{{base_url}}/cart/count", "host": ["{{base_url}}"], "path": ["cart", "count"] },
+			  "description": "Number of distinct products currently in the cart."
+			},
+			"response": [
+			  {
+				"name": "200 OK – count",
+				"status": "OK",
+				"code": 200,
+				"body": "{ \"success\": true, \"count\": 2 }"
+			  }
+			]
+		  }
+		]
+	  },
+	  {
+		"name": "Wishlist",
+		"item": [
+		  {
+			"name": "Add",
+			"request": {
+			  "method": "POST",
+			  "header": [{ "key": "Content-Type", "value": "application/json" }],
+			  "url": { "raw": "{{base_url}}/wishlist", "host": ["{{base_url}}"], "path": ["wishlist"] },
+			  "body": { "mode": "raw", "raw": "{\n  \"product_id\": {{product_id}}\n}" },
+			  "description": "Adds product to wishlist. Guest: cookie; Auth: DB. Same response shape."
+			},
+			"response": [
+			  {
+				"name": "201 Created – added",
+				"status": "Created",
+				"code": 201,
+				"body": "{\n  \"success\": true,\n  \"message\": \"Product added to wishlist successfully\",\n  \"wishlist_item\": {\n    \"id\": 555,\n    \"product\": { \"id\": 12, \"name_en\": \"Sneaker\", \"price\": 19.99, \"stock\": 7 },\n    \"added_at\": \"2025-08-26T09:35:00.000Z\",\n    \"in_stock\": true\n  }\n}"
+			  },
+			  {
+				"name": "422 – ALREADY_IN_WISHLIST",
+				"status": "Unprocessable Entity",
+				"code": 422,
+				"body": "{ \"success\": false, \"message\": \"Product already in wishlist\", \"error_code\": \"ALREADY_IN_WISHLIST\" }"
+			  },
+			  {
+				"name": "422 – PRODUCT_NOT_FOUND",
+				"status": "Unprocessable Entity",
+				"code": 422,
+				"body": "{ \"success\": false, \"message\": \"Product not found or inactive\", \"error_code\": \"PRODUCT_NOT_FOUND\" }"
+			  }
+			]
+		  },
+		  {
+			"name": "Get",
+			"request": {
+			  "method": "GET",
+			  "url": { "raw": "{{base_url}}/wishlist", "host": ["{{base_url}}"], "path": ["wishlist"] },
+			  "description": "Returns current wishlist items."
+			},
+			"response": [
+			  {
+				"name": "200 OK – items",
+				"status": "OK",
+				"code": 200,
+				"body": "{\n  \"success\": true,\n  \"wishlist_items\": [\n    { \"id\": 555, \"product\": { \"id\": 12, \"name_en\": \"Sneaker\", \"price\": 19.99, \"stock\": 7 }, \"added_at\": \"2025-08-26T09:35:00.000Z\", \"in_stock\": true }\n  ],\n  \"total_items\": 1\n}"
+			  }
+			]
+		  },
+		  {
+			"name": "Remove",
+			"request": {
+			  "method": "DELETE",
+			  "url": { "raw": "{{base_url}}/wishlist/{{product_id}}", "host": ["{{base_url}}"], "path": ["wishlist", "{{product_id}}"] },
+			  "description": "Removes a single product from wishlist."
+			},
+			"response": [
+			  {
+				"name": "200 OK – removed",
+				"status": "OK",
+				"code": 200,
+				"body": "{ \"success\": true, \"message\": \"Product removed from wishlist successfully\" }"
+			  },
+			  {
+				"name": "422 – ITEM_NOT_IN_WISHLIST",
+				"status": "Unprocessable Entity",
+				"code": 422,
+				"body": "{ \"success\": false, \"message\": \"Product not found in wishlist\", \"error_code\": \"ITEM_NOT_IN_WISHLIST\" }"
+			  }
+			]
+		  },
+		  {
+			"name": "Clear",
+			"request": {
+			  "method": "DELETE",
+			  "url": { "raw": "{{base_url}}/wishlist", "host": ["{{base_url}}"], "path": ["wishlist"] },
+			  "description": "Clears entire wishlist."
+			},
+			"response": [
+			  {
+				"name": "200 OK – cleared",
+				"status": "OK",
+				"code": 200,
+				"body": "{ \"success\": true, \"message\": \"Wishlist cleared successfully\" }"
+			  }
+			]
+		  },
+		  {
+			"name": "Count",
+			"request": {
+			  "method": "GET",
+			  "url": { "raw": "{{base_url}}/wishlist/count", "host": ["{{base_url}}"], "path": ["wishlist", "count"] },
+			  "description": "Number of distinct products currently in wishlist."
+			},
+			"response": [
+			  { "name": "200 OK – count", "status": "OK", "code": 200, "body": "{ \"success\": true, \"count\": 1 }" }
+			]
+		  },
+		  {
+			"name": "Check",
+			"request": {
+			  "method": "GET",
+			  "url": { "raw": "{{base_url}}/wishlist/check/{{product_id}}", "host": ["{{base_url}}"], "path": ["wishlist", "check", "{{product_id}}"] },
+			  "description": "Checks whether a product is in the wishlist."
+			},
+			"response": [
+			  { "name": "200 OK – in wishlist", "status": "OK", "code": 200, "body": "{ \"success\": true, \"in_wishlist\": true }" },
+			  { "name": "200 OK – not in wishlist", "status": "OK", "code": 200, "body": "{ \"success\": true, \"in_wishlist\": false }" }
+			]
+		  }
+		]
+	  }
 	],
 	"variable": [
-		{
-			"key": "base_url",
-			"value": "http://localhost:8000",
-			"type": "string"
-		}
+	  { "key": "base_url", "value": "http://localhost:8000/api" },
+	  { "key": "token", "value": "" },
+	  { "key": "product_id", "value": "12" },
+	  { "key": "quantity", "value": "1" }
 	]
-}
+  }
+  

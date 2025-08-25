@@ -107,7 +107,20 @@
                     </div>
                 </li>
 
-                
+                {{-- filepath: /Users/abdelrahmanalhababsah/Desktop/gifts/resources/views/admin/layouts/partials/sidebar.blade.php --}}
+                <li class="relative group-data-[layout=horizontal]:shrink-0 group/sm">
+                    <a href="{{ route('admin.discount-codes.index') }}"
+                        class="relative flex items-center ltr:pl-3 rtl:pr-3 ltr:pr-5 rtl:pl-5 mx-3 my-1 group/menu-link text-vertical-menu-item-font-size font-normal transition-all duration-75 ease-linear rounded-md py-2.5 text-vertical-menu-item hover:text-vertical-menu-item-hover hover:bg-vertical-menu-item-bg-hover {{ request()->routeIs('admin.discount-codes.*') ? 'active' : '' }} [&.active]:text-vertical-menu-item-active [&.active]:bg-vertical-menu-item-bg-active group-data-[sidebar=dark]:text-vertical-menu-item-dark group-data-[sidebar=dark]:hover:text-vertical-menu-item-hover-dark group-data-[sidebar=dark]:dark:hover:text-custom-500 group-data-[layout=horizontal]:dark:hover:text-custom-500 group-data-[sidebar=dark]:hover:bg-vertical-menu-item-bg-hover-dark group-data-[sidebar=dark]:dark:hover:bg-zink-600 group-data-[sidebar=dark]:[&.active]:text-vertical-menu-item-active-dark group-data-[sidebar=dark]:[&.active]:bg-vertical-menu-item-bg-active-dark group-data-[sidebar=brand]:text-vertical-menu-item-brand group-data-[sidebar=brand]:hover:text-vertical-menu-item-hover-brand group-data-[sidebar=brand]:hover:bg-vertical-menu-item-bg-hover-brand group-data-[sidebar=brand]:[&.active]:bg-vertical-menu-item-bg-active-brand group-data-[sidebar=brand]:[&.active]:text-vertical-menu-item-active-brand group-data-[sidebar=modern]:text-vertical-menu-item-modern group-data-[sidebar=modern]:hover:bg-vertical-menu-item-bg-hover-modern group-data-[sidebar=modern]:hover:text-vertical-menu-item-hover-modern group-data-[sidebar=modern]:[&.active]:bg-vertical-menu-item-bg-active-modern group-data-[sidebar=modern]:[&.active]:text-vertical-menu-item-active-modern">
+                        <span
+                            class="min-w-[1.75rem] group-data-[sidebar-size=sm]:h-[1.75rem] inline-block text-start text-[16px] group-data-[sidebar-size=md]:block group-data-[sidebar-size=sm]:flex group-data-[sidebar-size=sm]:items-center">
+                            <i data-lucide="percent"></i>
+                        </span>
+                        <span
+                            class="group-data-[sidebar-size=sm]:ltr:pl-10 group-data-[sidebar-size=sm]:rtl:pr-10 align-middle group-data-[sidebar-size=sm]:group-hover/sm:block group-data-[sidebar-size=sm]:hidden">
+                            Discount Codes
+                        </span>
+                    </a>
+                </li>
 
                 <li
                     class="px-4 py-1 text-vertical-menu-item group-data-[sidebar=dark]:text-vertical-menu-item-dark group-data-[sidebar=brand]:text-vertical-menu-item-brand group-data-[sidebar=modern]:text-vertical-menu-item-modern uppercase font-medium text-[11px] cursor-default tracking-wider group-data-[sidebar-size=sm]:hidden group-data-[layout=horizontal]:hidden inline-block group-data-[sidebar-size=md]:block group-data-[sidebar-size=md]:underline group-data-[sidebar-size=md]:text-center">
@@ -220,3 +233,92 @@
         <!-- Sidebar -->
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // the whole sidebar container (adjust selector if your wrapper changes)
+        const sidebar = document.querySelector('.app-menu');
+        if (!sidebar) return;
+
+        // click-to-toggle for dropdowns (works on mobile)
+        sidebar.addEventListener('click', function(e) {
+            const btn = e.target.closest('.dropdown-button');
+            if (!btn || !sidebar.contains(btn)) return;
+
+            // prevent navigation for "#!" triggers
+            e.preventDefault();
+
+            // find the direct parent <li> and its first-level .dropdown-content
+            const li = btn.closest('li');
+            const content = li ? li.querySelector(':scope > .dropdown-content') : null;
+            if (!content) return;
+
+            const isOpen = li.getAttribute('data-open') === '1';
+
+            // accordion behavior on small screens: close siblings
+            if (!isOpen && window.matchMedia('(max-width: 767px)').matches && li.parentElement) {
+                li.parentElement.querySelectorAll(':scope > li[data-open="1"]').forEach(function(sib) {
+                    if (sib === li) return;
+                    sib.setAttribute('data-open', '0');
+                    const sibBtn = sib.querySelector(':scope > .dropdown-button');
+                    const sibContent = sib.querySelector(':scope > .dropdown-content');
+                    sibBtn && sibBtn.classList.remove('show');
+                    if (sibContent) {
+                        sibContent.classList.add('hidden');
+                        sibContent.style.display = ''; // clear inline override
+                    }
+                });
+            }
+
+            if (isOpen) {
+                // close
+                li.setAttribute('data-open', '0');
+                btn.classList.remove('show'); // your CSS rotates arrow when .show is present
+                content.classList.add('hidden');
+                content.style.display = ''; // clear inline override
+            } else {
+                // open (inline display helps beat any Tailwind utilities that still hide on sm)
+                li.setAttribute('data-open', '1');
+                btn.classList.add('show');
+                content.classList.remove('hidden');
+                content.style.display = 'block';
+            }
+        });
+
+        // accessibility: toggle with Enter/Space when focused on the button
+        sidebar.addEventListener('keydown', function(e) {
+            if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('.dropdown-button')) {
+                e.preventDefault();
+                e.target.click();
+            }
+        });
+
+        // click outside to close (optional)
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target)) {
+                sidebar.querySelectorAll('li[data-open="1"]').forEach(function(li) {
+                    li.setAttribute('data-open', '0');
+                    const btn = li.querySelector(':scope > .dropdown-button');
+                    const content = li.querySelector(':scope > .dropdown-content');
+                    btn && btn.classList.remove('show');
+                    if (content) {
+                        content.classList.add('hidden');
+                        content.style.display = '';
+                    }
+                });
+            }
+        });
+
+        // mark any server-side active dropdowns as open on load
+        // (if you add 'show' to the <a> in Blade when route matches)
+        sidebar.querySelectorAll('.dropdown-button.show').forEach(function(btn) {
+            const li = btn.closest('li');
+            const content = li ? li.querySelector(':scope > .dropdown-content') : null;
+            if (li && content) {
+                li.setAttribute('data-open', '1');
+                content.classList.remove('hidden');
+                content.style.display = 'block';
+            }
+        });
+    });
+</script>

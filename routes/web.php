@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,10 +47,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/select/options', [BrandController::class, 'getForSelect'])->name('select');
         });
 
+        // Products Management
         Route::resource('products', ProductController::class)->names('products');
         Route::patch('products/{product}/toggle-status', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
         Route::patch('products/{product}/toggle-featured', [ProductController::class, 'toggleFeatured'])->name('products.toggleFeatured');
         Route::get('products-for-select', [ProductController::class, 'getForSelect'])->name('products.getForSelect');
+
+        // Discount Codes Management
+        Route::prefix('discount-codes')->name('discount-codes.')->group(function () {
+            Route::get('/', [DiscountCodeController::class, 'index'])->name('index');
+            Route::post('/', [DiscountCodeController::class, 'store'])->name('store');
+            Route::get('/{discountCode}', [DiscountCodeController::class, 'show'])->name('show');
+            Route::put('/{discountCode}', [DiscountCodeController::class, 'update'])->name('update');
+            Route::delete('/{discountCode}', [DiscountCodeController::class, 'destroy'])->name('destroy');
+            Route::post('/{discountCode}/toggle-status', [DiscountCodeController::class, 'toggleStatus'])->name('toggleStatus');
+            Route::get('/select/options', [DiscountCodeController::class, 'getForSelect'])->name('select');
+        });
     });
 });
 
