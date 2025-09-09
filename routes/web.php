@@ -41,7 +41,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/', [BrandController::class, 'index'])->name('index');
             Route::post('/', [BrandController::class, 'store'])->name('store');
             Route::get('/{brand}', [BrandController::class, 'show'])->name('show');
-            Route::post('/{brand}', [BrandController::class, 'update'])->name('update'); // POST for file uploads
+            Route::put('/{brand}', [BrandController::class, 'update'])->name('update'); // POST for file uploads
             Route::delete('/{brand}', [BrandController::class, 'destroy'])->name('destroy');
             Route::patch('/{brand}/toggle-status', [BrandController::class, 'toggleStatus'])->name('toggleStatus');
             Route::get('/select/options', [BrandController::class, 'getForSelect'])->name('select');

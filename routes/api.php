@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\CheckoutController;
+use App\Http\Controllers\Api\CitiesController;
+use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\TimeSlotController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +68,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/resend-verification-code', [VerifyEmailWithCodeController::class, 'resend'])->name('verification.resend');
     });
 
+    Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
+    Route::post('/checkout/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('checkout.applyDiscount');
+    Route::delete('/checkout/discount', [CheckoutController::class, 'clearDiscount'])->name('checkout.clearDiscount');
+
+    Route::patch('/user/profile', [ProfileController::class, 'update'])->name('user.profile.update');
+    Route::delete('/user', [ProfileController::class, 'destroy'])->name('user.delete');
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
     Route::get('/user', function (Request $request) {
@@ -105,3 +115,6 @@ Route::middleware($stateful)->get('/debug-session', function () {
         'all_session' => session()->all(),
     ]);
 });
+Route::get('/cities', [CitiesController::class, 'cities'])->name('cities.index');
+
+Route::get('/time-slots', [TimeSlotController::class, 'index'])->name('time-slots.index');
