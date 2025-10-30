@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\CitiesController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\TimeSlotController;
 use Illuminate\Http\Request;
@@ -67,6 +69,19 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/verify-email', [VerifyEmailWithCodeController::class, 'verify'])->name('verification.verify');
         Route::post('/resend-verification-code', [VerifyEmailWithCodeController::class, 'resend'])->name('verification.resend');
     });
+    Route::post('/payments/intent', [PaymentController::class, 'intent'])
+        ->name('payments.intent');
+    Route::post('/payments/confirm', [PaymentController::class, 'confirm'])
+        ->name('payments.confirm');
+
+
+    // Order routes
+    Route::prefix('orders')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/{orderId}', [OrderController::class, 'show'])
+            ->name('orders.show')
+            ->where('orderId', '[0-9]+');
+    });
 
     Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
     Route::post('/checkout/apply-discount', [CheckoutController::class, 'applyDiscount'])->name('checkout.applyDiscount');
@@ -118,3 +133,7 @@ Route::middleware($stateful)->get('/debug-session', function () {
 Route::get('/cities', [CitiesController::class, 'cities'])->name('cities.index');
 
 Route::get('/time-slots', [TimeSlotController::class, 'index'])->name('time-slots.index');
+
+
+Route::post('/payments/webhook', [PaymentController::class, 'webhook'])
+    ->name('payments.webhook');

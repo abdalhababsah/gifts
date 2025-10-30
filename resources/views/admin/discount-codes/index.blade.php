@@ -209,7 +209,7 @@
                                         data-id="{{ $discountCode->id }}">
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <a href="#!"
-                                                class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600 discount-id">#DC{{ str_pad($discountCode->id, 5, '0', STR_PAD_LEFT) }}</a>
+                                                class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600 discount-id">#DC{{ str_pad((string) $discountCode->id, 5, '0', STR_PAD_LEFT) }}</a>
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <div class="flex flex-col">

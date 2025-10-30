@@ -166,7 +166,7 @@
                                         data-id="{{ $brand->id }}">
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <a href="#!"
-                                                class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600 user-id">#BR{{ str_pad($brand->id, 5, '0', STR_PAD_LEFT) }}</a>
+                                                class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600 user-id">#BR{{ str_pad((string) $brand->id, 5, '0', STR_PAD_LEFT) }}</a>
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 brand-image">
                                             <div

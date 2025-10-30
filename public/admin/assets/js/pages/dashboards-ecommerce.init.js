@@ -4,444 +4,472 @@ Author: Themesdesign
 Version: 1.1.0
 Website: https://themesdesign.in/
 Contact: Themesdesign@gmail.com
-File: dashboard ecommerce init Js File
+File: dashboard ecommerce init Js File (customised for dynamic data)
 */
 
-// rgb to hex convert
-function rgbToHex(rgb) {
-    // Extract RGB values using regular expressions
-    const rgbValues = rgb.match(/\d+/g);
+(function () {
+    "use strict";
 
-    if (rgbValues.length === 3) {
-        var [r, g, b] = rgbValues.map(Number);
+    /**
+     * Convert an RGB color string to HEX.
+     */
+    function rgbToHex(rgb) {
+        if (!rgb) {
+            return "#000000";
+        }
+
+        const rgbValues = rgb.match(/\d+/g);
+        if (!rgbValues || rgbValues.length < 3) {
+            return "#000000";
+        }
+
+        const [r, g, b] = rgbValues.map((value) =>
+            Math.max(0, Math.min(255, Number(value) || 0))
+        );
+
+        const toHex = (value) => value.toString(16).padStart(2, "0");
+
+        return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
     }
-    // Ensure the values are within the valid range (0-255)
-    r = Math.max(0, Math.min(255, r));
-    g = Math.max(0, Math.min(255, g));
-    b = Math.max(0, Math.min(255, b));
 
-    // Convert each component to its hexadecimal representation
-    const rHex = r.toString(16).padStart(2, '0');
-    const gHex = g.toString(16).padStart(2, '0');
-    const bHex = b.toString(16).padStart(2, '0');
+    /**
+     * Resolve chart colour tokens (Tailwind classes or HEX values) to HEX.
+     */
+    function getChartColorsArray(chartId) {
+        const chartElement = document.getElementById(chartId);
+        if (!chartElement) {
+            return null;
+        }
 
-    // Combine the hexadecimal values with the "#" prefix
-    const hexColor = `#${rHex}${gHex}${bHex}`;
-
-    return hexColor.toUpperCase(); // Convert to uppercase for consistency
-}
-
-// common function to get charts colors from class
-function getChartColorsArray(chartId) {
-    const chartElement = document.getElementById(chartId);
-    if (chartElement) {
         const colors = chartElement.dataset.chartColors;
-        if (colors) {
-            const parsedColors = JSON.parse(colors);
-            const mappedColors = parsedColors.map((value) => {
-                const newValue = value.replace(/\s/g, "");
-                if (!newValue.includes("#")) {
-                    const element = document.querySelector(newValue);
-                    if (element) {
-                        const styles = window.getComputedStyle(element);
-                        const backgroundColor = styles.backgroundColor;
-                        return backgroundColor || newValue;
-                    } else {
-                        const divElement = document.createElement('div');
-                        divElement.className = newValue;
-                        document.body.appendChild(divElement);
-
-                        const styles = window.getComputedStyle(divElement);
-                        const backgroundColor = styles.backgroundColor.includes("#") ? styles.backgroundColor : rgbToHex(styles.backgroundColor);
-                        return backgroundColor || newValue;
-                    }
-                } else {
-                    return newValue;
-                }
-            });
-            return mappedColors;
-        } else {
+        if (!colors) {
             console.warn(`chart-colors attribute not found on: ${chartId}`);
+            return null;
+        }
+
+        try {
+            const parsedColors = JSON.parse(colors);
+
+            return parsedColors.map((colorToken) => {
+                const token = colorToken.replace(/\s/g, "");
+
+                if (token.startsWith("#")) {
+                    return token;
+                }
+
+                const existingElement = document.querySelector(token);
+                if (existingElement) {
+                    const computed = window.getComputedStyle(existingElement);
+                    return computed.backgroundColor.includes("#")
+                        ? computed.backgroundColor
+                        : rgbToHex(computed.backgroundColor);
+                }
+
+                const probe = document.createElement("div");
+                probe.className = token;
+                document.body.appendChild(probe);
+                const computed = window.getComputedStyle(probe);
+                const color = computed.backgroundColor.includes("#")
+                    ? computed.backgroundColor
+                    : rgbToHex(computed.backgroundColor);
+                document.body.removeChild(probe);
+
+                return color;
+            });
+        } catch (error) {
+            console.error(`Unable to parse chart colors for ${chartId}`, error);
+            return null;
         }
     }
-}
 
-//Sales Revenue Overview
-var options = {
-    series: [{
-        name: 'Total Sales',
-        data: [44, 55, 41, 67, 22, 43, 21, 49, 20, 41, 67, 22,]
-    }, {
-        name: 'Total Profit',
-        data: [11, 17, 15, 15, 21, 14, 15, 13, 5, 15, 15, 21,]
-    }],
-    chart: {
-        type: 'bar',
-        height: 300,
-        stacked: true,
-        stackType: '100%',
-        toolbar: {
-            show: false,
-        },
-    },
-    xaxis: {
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    },
-    tooltip: {
-        y: {
-            formatter: function (val) {
-                return "$" + val + "k"
+    function parseJSON(value, fallback) {
+        if (!value) {
+            return fallback;
+        }
+
+        try {
+            return JSON.parse(value);
+        } catch (error) {
+            console.warn("Failed to parse JSON value", value, error);
+            return fallback;
+        }
+    }
+
+    function toNumberArray(values) {
+        if (!Array.isArray(values)) {
+            return [];
+        }
+
+        return values.map((value) => {
+            const numeric = Number(value);
+            return Number.isFinite(numeric) ? numeric : 0;
+        });
+    }
+
+    function formatNumber(value, fractionDigits) {
+        return new Intl.NumberFormat(undefined, {
+            minimumFractionDigits: fractionDigits,
+            maximumFractionDigits: fractionDigits,
+        }).format(value);
+    }
+
+    function formatCurrency(value) {
+        const isInteger = Number.isInteger(value);
+        const digits = isInteger ? 0 : 2;
+        return `$${formatNumber(value, digits)}`;
+    }
+
+    function formatAxisValue(value) {
+        const absolute = Math.abs(value);
+
+        if (absolute >= 1_000_000_000) {
+            return `${(value / 1_000_000_000).toFixed(1)}B`;
+        }
+
+        if (absolute >= 1_000_000) {
+            return `${(value / 1_000_000).toFixed(1)}M`;
+        }
+
+        if (absolute >= 1_000) {
+            return `${(value / 1_000).toFixed(1)}k`;
+        }
+
+        return formatNumber(value, 0);
+    }
+
+    function renderNoData(element) {
+        if (!element) {
+            return;
+        }
+
+        element.innerHTML =
+            '<div class="py-6 text-center text-slate-500 dark:text-zink-200">No data available</div>';
+        element.classList.remove("apex-charts");
+    }
+
+    function renderChart(element, options) {
+        if (!element || typeof ApexCharts === "undefined") {
+            return null;
+        }
+
+        const chart = new ApexCharts(element, options);
+        chart.render();
+        return chart;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        if (typeof ApexCharts === "undefined") {
+            console.warn("ApexCharts library is not loaded.");
+            return;
+        }
+
+        // Order Statistics (Delivered vs Processing)
+        (function initialiseOrderStatisticsChart() {
+            const element = document.querySelector("#orderStatisticsChart");
+            if (!element) {
+                return;
             }
-        }
-    },
-    grid: {
-        show: true,
-        padding: {
-            top: -20,
-            right: -10,
-        }
-    },
-    plotOptions: {
-        bar: {
-            horizontal: false,
-            columnWidth: '50%',
-        },
-    },
-    colors: getChartColorsArray("salesRevenueOverview"),
-    fill: {
-        opacity: 1
-    },
-    legend: {
-        position: 'bottom',
-    },
-};
 
-var chart = new ApexCharts(document.querySelector("#salesRevenueOverview"), options);
-chart.render();
+            const colors = getChartColorsArray("orderStatisticsChart") || [
+                "#0ea5e9",
+                "#8b5cf6",
+            ];
+            const delivered = Number(element.dataset.delivered || 0);
+            const processing = Number(element.dataset.processing || 0);
+            const values = [delivered, processing];
 
-
-//Order Statistics
-var options = {
-    series: [{
-        name: 'Pending',
-        data: [17, 16, 19, 22, 24, 29, 25, 20, 25, 31, 28, 35,]
-    },{
-        name: 'New Orders',
-        data: [30, 24, 32, 27, 16, 22, 32, 21, 24, 20, 38, 28]
-    }],
-    chart: {
-        type: 'line',
-        height: 310,
-        toolbar: {
-            show: false,
-        },
-    },
-    stroke: {
-        curve: 'smooth',
-        width: 2,
-    },
-    colors: getChartColorsArray("orderStatisticsChart"),
-    dataLabels: {
-        enabled: false
-    },
-    grid: {
-        show: true,
-        padding: {
-            top: -20,
-            right: 0,
-        }
-    },
-    markers: {
-        hover: {
-            sizeOffset: 4
-        }
-    }
-};
-
-var chart = new ApexCharts(document.querySelector("#orderStatisticsChart"), options);
-chart.render();
-
-//Traffic Resources Chart
-var options = {
-    series: [44, 34, 22],
-    chart: {
-        height: 222,
-        type: 'radialBar',
-    },
-    plotOptions: {
-        radialBar: {
-            dataLabels: {
-                total: {
-                    show: true,
-                    label: 'Total',
-                    formatter: function (w) {
-                        // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-                        return 875
-                    }
-                }
+            if (values.every((value) => value === 0)) {
+                renderNoData(element);
+                return;
             }
-        }
-    },
-    grid: {
-        show: true,
-        padding: {
-            top: -8,
-            bottom: -15,
-            left: 0,
-            right: 0,
-        }
-    },
-    colors: getChartColorsArray("trafficResourcesChart"),
-    labels: ['Direct', 'Referrals', 'Search Engine'],
-};
 
-var chart = new ApexCharts(document.querySelector("#trafficResourcesChart"), options);
-chart.render();
+            const options = {
+                series: [
+                    {
+                        name: "Orders",
+                        data: values,
+                    },
+                ],
+                chart: {
+                    type: "bar",
+                    height: 320,
+                    toolbar: {
+                        show: false,
+                    },
+                },
+                plotOptions: {
+                    bar: {
+                        columnWidth: "45%",
+                        borderRadius: 6,
+                        distributed: true,
+                    },
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                colors: colors,
+                xaxis: {
+                    categories: ["Delivered", "Processing"],
+                    axisBorder: {
+                        show: false,
+                    },
+                    axisTicks: {
+                        show: false,
+                    },
+                    labels: {
+                        style: {
+                            fontSize: "13px",
+                        },
+                    },
+                },
+                yaxis: {
+                    labels: {
+                        formatter: (value) => formatNumber(value, 0),
+                    },
+                },
+                grid: {
+                    strokeDashArray: 4,
+                },
+                tooltip: {
+                    y: {
+                        formatter: (value) => `${formatNumber(value, 0)} orders`,
+                    },
+                },
+                legend: {
+                    show: false,
+                },
+            };
 
-//Sales This Month Chart
-var options = {
-    series: [
-        {
-            type: 'rangeArea',
-            name: 'Profit Range',
+            renderChart(element, options);
+        })();
 
-            data: [
-                {
-                    x: 'Mar',
-                    y: [900, 2900]
-                },
-                {
-                    x: 'Apr',
-                    y: [1400, 2700]
-                },
-                {
-                    x: 'May',
-                    y: [2600, 3900]
-                },
-                {
-                    x: 'Jun',
-                    y: [500, 1700]
-                },
-                {
-                    x: 'Jul',
-                    y: [1900, 2300]
-                },
-                {
-                    x: 'Aug',
-                    y: [1000, 1500]
-                }
-            ]
-        },
-
-        {
-            type: 'rangeArea',
-            name: 'Expense Range',
-            data: [
-                {
-                    x: 'Mar',
-                    y: [3900, 4900]
-                },
-                {
-                    x: 'Apr',
-                    y: [3400, 3900]
-                },
-                {
-                    x: 'May',
-                    y: [5100, 5900]
-                },
-                {
-                    x: 'Jun',
-                    y: [5400, 6700]
-                },
-                {
-                    x: 'Jul',
-                    y: [4300, 4600]
-                },
-                {
-                    x: 'Aug',
-                    y: [2100, 2900]
-                }
-            ]
-        },
-
-        {
-            type: 'line',
-            name: 'Profit Median',
-            data: [
-                {
-                    x: 'Mar',
-                    y: 1900
-                },
-                {
-                    x: 'Apr',
-                    y: 2200
-                },
-                {
-                    x: 'May',
-                    y: 3000
-                },
-                {
-                    x: 'Jun',
-                    y: 1000
-                },
-                {
-                    x: 'Jul',
-                    y: 2100
-                },
-                {
-                    x: 'Aug',
-                    y: 1200
-                },
-                {
-                    x: 'Sep',
-                    y: 2250
-                },
-                {
-                    x: 'Oct',
-                    y: 2900
-                }
-            ]
-        },
-        {
-            type: 'line',
-            name: 'Expense Median',
-            data: [
-                {
-                    x: 'Mar',
-                    y: 4300
-                },
-                {
-                    x: 'Apr',
-                    y: 3700
-                },
-                {
-                    x: 'May',
-                    y: 5500
-                },
-                {
-                    x: 'Jun',
-                    y: 5900
-                },
-                {
-                    x: 'Jul',
-                    y: 4500
-                },
-                {
-                    x: 'Aug',
-                    y: 3500
-                },
-                {
-                    x: 'Sep',
-                    y: 2000
-                },
-                {
-                    x: 'Oct',
-                    y: 1800
-                }
-            ]
-        }
-    ],
-    chart: {
-        height: 285,
-        type: 'rangeArea',
-        animations: {
-            speed: 500
-        },
-        toolbar: {
-            show: false,
-        },
-    },
-    colors: getChartColorsArray("salesThisMonthChart"),
-    dataLabels: {
-        enabled: false
-    },
-    fill: {
-        opacity: [0.24, 0.24, 1, 1]
-    },
-    forecastDataPoints: {
-        count: 2
-    },
-    yaxis: {
-        show: false,
-    },
-    stroke: {
-        curve: 'straight',
-        width: [0, 0, 2, 2]
-    },
-    grid: {
-        show: true,
-        padding: {
-            top: -8,
-            left: 10,
-            right: 0,
-        }
-    },
-    legend: {
-        show: true,
-        customLegendItems: ['Team B', 'Team A'],
-        inverseOrder: true
-    },
-    markers: {
-        hover: {
-            sizeOffset: 5
-        }
-    }
-};
-
-var chart = new ApexCharts(document.querySelector("#salesThisMonthChart"), options);
-chart.render();
-
-//Audience Chart
-var options = {
-    series: [{
-        name: 'Male',
-        data: [44, 55, 41, 67, 22, 43, 26]
-    }, {
-        name: 'Female',
-        data: [13, 23, 20, 8, 13, 27, 41]
-    }],
-    chart: {
-        type: 'bar',
-        height: 390,
-        stacked: true,
-        toolbar: {
-            show: false
-        },
-        zoom: {
-            enabled: true
-        }
-    },
-    plotOptions: {
-        bar: {
-            horizontal: false,
-            borderRadius: 6,
-            columnWidth: '44%',
-            dataLabels: {
-                total: {    
-                    enabled: true,
-                    style: {
-                        fontSize: '13px',
-                        fontWeight: 600
-                    }
-                }
+        // Sales Revenue Overview (Monthly Sales & Profit)
+        (function initialiseRevenueOverviewChart() {
+            const element = document.querySelector("#salesRevenueOverview");
+            if (!element) {
+                return;
             }
-        },
-    },
-    xaxis: {
-        type: 'datetime',
-        categories: ['01/01/2023 GMT', '01/02/2023 GMT', '01/03/2023 GMT', '01/04/2023 GMT',
-            '01/05/2023 GMT', '01/06/2023 GMT', '01/07/2023 GMT'
-        ],
-    },
-    colors: getChartColorsArray("audienceChart"),
-    legend: {
-        position: 'top',
-        horizontalAlign: 'right',
-    },
-    fill: {
-        opacity: 1
-    }
-};
 
-var chart = new ApexCharts(document.querySelector("#audienceChart"), options);
-chart.render();
+            const months = parseJSON(element.dataset.months, []);
+            const sales = toNumberArray(parseJSON(element.dataset.sales, []));
+            const profits = toNumberArray(parseJSON(element.dataset.profits, []));
+
+            if (!months.length || !sales.length) {
+                renderNoData(element);
+                return;
+            }
+
+            const colors = getChartColorsArray("salesRevenueOverview") || [
+                "#0ea5e9",
+                "#22c55e",
+            ];
+
+            const options = {
+                series: [
+                    {
+                        name: "Total Sales",
+                        data: sales,
+                    },
+                    {
+                        name: "Total Profit",
+                        data: profits,
+                    },
+                ],
+                chart: {
+                    type: "bar",
+                    height: 320,
+                    stacked: false,
+                    toolbar: {
+                        show: false,
+                    },
+                },
+                plotOptions: {
+                    bar: {
+                        columnWidth: "40%",
+                        endingShape: "rounded",
+                    },
+                },
+                colors: colors,
+                dataLabels: {
+                    enabled: false,
+                },
+                xaxis: {
+                    categories: months,
+                    axisBorder: {
+                        show: false,
+                    },
+                    axisTicks: {
+                        show: false,
+                    },
+                },
+                yaxis: {
+                    labels: {
+                        formatter: (value) => formatAxisValue(value),
+                    },
+                },
+                grid: {
+                    strokeDashArray: 4,
+                },
+                tooltip: {
+                    y: {
+                        formatter: (value) => formatCurrency(value),
+                    },
+                },
+                legend: {
+                    position: "bottom",
+                    horizontalAlign: "center",
+                },
+            };
+
+            renderChart(element, options);
+        })();
+
+        // Sales This Month (Sales vs Profit trend)
+        (function initialiseSalesThisMonthChart() {
+            const element = document.querySelector("#salesThisMonthChart");
+            if (!element) {
+                return;
+            }
+
+            const months = parseJSON(element.dataset.months, []);
+            const sales = toNumberArray(parseJSON(element.dataset.sales, []));
+            const profits = toNumberArray(parseJSON(element.dataset.profits, []));
+
+            if (!months.length || !sales.length) {
+                renderNoData(element);
+                return;
+            }
+
+            const colors = getChartColorsArray("salesThisMonthChart") || [
+                "#0ea5e9",
+                "#f97316",
+            ];
+
+            const series = [
+                {
+                    name: "Sales",
+                    data: sales,
+                },
+            ];
+
+            if (profits.length === sales.length) {
+                series.push({
+                    name: "Profit",
+                    data: profits,
+                });
+            }
+
+            const options = {
+                chart: {
+                    type: "area",
+                    height: 280,
+                    toolbar: {
+                        show: false,
+                    },
+                    animations: {
+                        speed: 500,
+                    },
+                },
+                colors: colors,
+                dataLabels: {
+                    enabled: false,
+                },
+                stroke: {
+                    curve: "smooth",
+                    width: 2,
+                },
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shadeIntensity: 0.4,
+                        opacityFrom: 0.6,
+                        opacityTo: 0.1,
+                    },
+                },
+                series: series,
+                xaxis: {
+                    categories: months,
+                },
+                yaxis: {
+                    labels: {
+                        formatter: (value) => formatAxisValue(value),
+                    },
+                },
+                tooltip: {
+                    shared: true,
+                    intersect: false,
+                    y: {
+                        formatter: (value) => formatCurrency(value),
+                    },
+                },
+                legend: {
+                    position: "top",
+                    horizontalAlign: "right",
+                },
+                grid: {
+                    strokeDashArray: 4,
+                },
+            };
+
+            renderChart(element, options);
+        })();
+
+        // Order Status Distribution (Donut)
+        (function initialiseOrderStatusChart() {
+            const element = document.querySelector("#orderStatusChart");
+            if (!element) {
+                return;
+            }
+
+            const labels = parseJSON(element.dataset.labels, []);
+            const series = toNumberArray(parseJSON(element.dataset.series, []));
+
+            if (!labels.length || !series.length || series.every((value) => value === 0)) {
+                renderNoData(element);
+                return;
+            }
+
+            const colors = getChartColorsArray("orderStatusChart") || [
+                "#0ea5e9",
+                "#f97316",
+                "#22c55e",
+                "#eab308",
+                "#ef4444",
+            ];
+
+            const options = {
+                chart: {
+                    type: "donut",
+                    height: 320,
+                },
+                labels: labels,
+                series: series,
+                colors: colors,
+                dataLabels: {
+                    enabled: false,
+                },
+                stroke: {
+                    width: 0,
+                },
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            size: "70%",
+                        },
+                    },
+                },
+                legend: {
+                    position: "bottom",
+                    horizontalAlign: "center",
+                },
+                tooltip: {
+                    y: {
+                        formatter: (value) => formatNumber(value, 0),
+                    },
+                },
+            };
+
+            renderChart(element, options);
+        })();
+    });
+})();

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+        // In routes/web.php inside the authenticated admin group:
+        Route::prefix('orders')->name('orders.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('index');
+            Route::get('/{order}', [\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('show');
+            Route::put('/{order}/delivery-status', [\App\Http\Controllers\Admin\OrderController::class, 'updateDeliveryStatus'])->name('updateDeliveryStatus');
+            Route::get('/{order}/print', [\App\Http\Controllers\Admin\OrderController::class, 'print'])->name('print');
+        });
 
         // Categories Management
         Route::prefix('categories')->name('categories.')->group(function () {
@@ -62,6 +71,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/{discountCode}', [DiscountCodeController::class, 'destroy'])->name('destroy');
             Route::post('/{discountCode}/toggle-status', [DiscountCodeController::class, 'toggleStatus'])->name('toggleStatus');
             Route::get('/select/options', [DiscountCodeController::class, 'getForSelect'])->name('select');
+        });
+
+        // Users Management
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('index');
+            Route::post('/', [UserController::class, 'store'])->name('store');
+            Route::get('/{user}', [UserController::class, 'show'])->name('show');
+            Route::put('/{user}', [UserController::class, 'update'])->name('update');
+            Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
         });
     });
 });

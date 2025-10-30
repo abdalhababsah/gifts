@@ -62,28 +62,19 @@
 
                     </div>
                 </div>
-                <div class="mt-5">
-                    <p class="mb-0 text-center text-15 text-slate-500 dark:text-zink-200">©
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script> Tailwick. Crafted with <i class="text-red-500 ri-heart-fill"></i> by
-                        <a href="http://themesdesign.in"
-                            class="underline transition-all duration-200 ease-linear text-slate-800 dark:text-zink-50 hover:text-custom-500">Themesdesign</a>
-                    </p>
-                </div>
             </div>
         </div>
         <div class="relative z-10 flex items-center justify-center min-h-screen px-10 grow py-14">
             <div>
-                <a href="#!"><img src="./assets/images/logo-light.png" alt=""
-                        class="block mx-auto mb-14 h-7"></a>
+                <a href="#!"><img src="{{ asset('admin/assets/images/logo-light.png') }}" alt=""
+                        class="block mx-auto mb-14 h-20"></a>
                 
-                <div class="mt-10 text-center">
-                    <h3 class="mb-3 capitalize text-custom-50">Tools for crafting your business's brand identity</h3>
-                    <p class="max-w-2xl text-custom-300 text-16">Unlock the potential of our versatile branding tools,
-                        designed to empower your business in shaping a distinctive and impactful brand. Elevate your
-                        business's image and leave a lasting impression with our comprehensive branding solutions.</p>
-                </div>
+                        <div class="mt-10 text-center">
+                            <h3 class="mb-3 capitalize text-custom-50">Managing your gift shop with ease</h3>
+                            <p class="max-w-2xl text-custom-300 text-16">Streamline your gift shop operations with our intuitive dashboard tools. 
+                                From inventory management to order tracking and customer insights, everything you need to deliver 
+                                memorable gifting experiences is right at your fingertips.</p>
+                        </div>
             </div>
         </div>
     </div>

@@ -166,7 +166,7 @@
                                         data-id="{{ $category->id }}">
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <a href="#!"
-                                                class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600 user-id">#CT{{ str_pad($category->id, 5, '0', STR_PAD_LEFT) }}</a>
+                                                class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600 user-id">#CT{{ str_pad((string) $category->id, 5, '0', STR_PAD_LEFT) }}</a>
                                         </td>
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-medium name-en">
                                             {{ $category->name_en }}</td>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -20,6 +21,7 @@ class Order extends Model
         'is_gift',
         'receiver_name',
         'receiver_phone',
+        'delivery_status',
         'location_description',
         'extra_notes',
         'is_anonymous_delivery',
@@ -68,11 +70,27 @@ class Order extends Model
     }
 
     /**
+     * Alias for items - used in controller
+     */
+    public function orderItems(): HasMany
+    {
+        return $this->items();
+    }
+
+    /**
      * Get all payments for this order.
      */
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Get the primary/latest payment for this order.
+     */
+    public function payment(): HasOne
+    {
+        return $this->hasOne(Payment::class)->latest();
     }
 
     /**

@@ -14,7 +14,7 @@
                                 alt="" class="h-6 mx-auto">
                         </span>
                         <span class="group-data-[topbar=dark]:hidden group-data-[topbar=brand]:hidden">
-                            <img src="./assets/images/logo-dark.png" alt="" class="h-6 mx-auto">
+                            <img src="{{ asset('admin/assets/images/logo-dark.png') }}" alt="" class="h-12 mx-auto">
                         </span>
                     </a>
                     <a href="index.html" class="hidden group-data-[topbar=dark]:block group-data-[topbar=brand]:block">
@@ -23,7 +23,7 @@
                                 alt="" class="h-6 mx-auto">
                         </span>
                         <span class="group-data-[topbar=dark]:block group-data-[topbar=brand]:block">
-                            <img src="./assets/images/logo-light.png" alt="" class="h-6 mx-auto">
+                            <img src="{{ asset('admin/assets/images/logo-light.png') }}" alt="" class="h-12 mx-auto">
                         </span>
                     </a>
                 </div>
@@ -35,14 +35,7 @@
                     <i data-lucide="chevrons-right" class="hidden w-5 h-5 group-data-[sidebar-size=sm]:block"></i>
                 </button>
 
-                <div
-                    class="relative hidden ltr:ml-3 rtl:mr-3 lg:block group-data-[layout=horizontal]:hidden group-data-[layout=horizontal]:lg:block">
-                    <input type="text"
-                        class="py-2 pr-4 text-sm text-topbar-item bg-topbar border border-topbar-border rounded pl-8 placeholder:text-slate-400 form-control focus-visible:outline-0 min-w-[300px] focus:border-blue-400 group-data-[topbar=dark]:bg-topbar-dark group-data-[topbar=dark]:border-topbar-border-dark group-data-[topbar=dark]:placeholder:text-slate-500 group-data-[topbar=dark]:text-topbar-item-dark group-data-[topbar=brand]:bg-topbar-brand group-data-[topbar=brand]:border-topbar-border-brand group-data-[topbar=brand]:placeholder:text-blue-300 group-data-[topbar=brand]:text-topbar-item-brand group-data-[topbar=dark]:dark:bg-zink-700 group-data-[topbar=dark]:dark:border-zink-500 group-data-[topbar=dark]:dark:text-zink-100"
-                        placeholder="Search for ..." autocomplete="off">
-                    <i data-lucide="search"
-                        class="inline-block size-4 absolute left-2.5 top-2.5 text-topbar-item fill-slate-100 group-data-[topbar=dark]:fill-topbar-item-bg-hover-dark group-data-[topbar=dark]:text-topbar-item-dark group-data-[topbar=brand]:fill-topbar-item-bg-hover-brand group-data-[topbar=brand]:text-topbar-item-brand group-data-[topbar=dark]:dark:text-zink-200 group-data-[topbar=dark]:dark:fill-zink-600"></i>
-                </div>
+        
 
                 <div class="flex gap-3 ms-auto">
 
@@ -68,7 +61,7 @@
                         <div class="absolute z-50 hidden p-4 ltr:text-left rtl:text-right bg-white rounded-md shadow-md !top-4 dropdown-menu min-w-[14rem] dark:bg-zink-600"
                             aria-labelledby="dropdownMenuButton">
                             <h6 class="mb-2 text-sm font-normal text-slate-500 dark:text-zink-300">Welcome to
-                                Tailwick</h6>
+                                Gifts Shop</h6>
                             <a href="#!" class="flex gap-3 mb-3">
                                 <div class="relative inline-block shrink-0">
                                     <div class="rounded bg-slate-100 dark:bg-zink-500">
@@ -84,22 +77,12 @@
                                 </div>
                             </a>
                             <ul>
-                                <li>
+                                {{-- <li>
                                     <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500"
                                         href="pages-account.html"><i data-lucide="user-2"
                                             class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Profile</a>
-                                </li>
-                                <li>
-                                    <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500"
-                                        href="apps-mailbox.html"><i data-lucide="mail"
-                                            class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Inbox <span
-                                            class="inline-flex items-center justify-center w-5 h-5 ltr:ml-2 rtl:mr-2 text-[11px] font-medium border rounded-full text-white bg-red-500 border-red-500">15</span></a>
-                                </li>
-                                <li>
-                                    <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500"
-                                        href="apps-chat.html"><i data-lucide="messages-square"
-                                            class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i> Chat</a>
-                                </li>
+                                </li> --}}
+
                                 <li class="pt-2 mt-2 border-t border-slate-200 dark:border-zink-500">
                                     <form action="{{ route('admin.logout') }}" method="POST" class="inline-block w-full">
                                         @csrf
