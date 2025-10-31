@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-body">
                         <div class="flex items-center gap-4">
                             <div class="flex items-center justify-center size-12 text-amber-500 bg-amber-100 rounded-md dark:bg-amber-500/20 shrink-0">
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card">
                     <div class="card-body">
                         <div class="flex items-center gap-4">
@@ -163,7 +163,7 @@
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Phone</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Role</th>
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Joined</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Verification</th>
+                                    {{-- <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Verification</th> --}}
                                     <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold">Action</th>
                                 </tr>
                             </thead>
@@ -201,7 +201,7 @@
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             {{ $user->created_at?->format('d M, Y') ?? '—' }}
                                         </td>
-                                        <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
+                                        {{-- <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             @if ($user->email_verified_at)
                                                 <span class="inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium text-green-500 bg-green-100 rounded-full dark:bg-green-500/20">
                                                     <i data-lucide="check-circle" class="size-3"></i> Verified
@@ -211,7 +211,7 @@
                                                     <i data-lucide="clock" class="size-3"></i> Pending
                                                 </span>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td class="px-3.5 py-2.5 first:pl-5 last:pr-5">
                                             <div class="flex items-center gap-2">
                                                 <button type="button"
@@ -224,11 +224,11 @@
                                                     @csrf
                                                     @method('DELETE')
                                                 </form> --}}
-                                                <button type="button"
+                                                {{-- <button type="button"
                                                     class="px-2.5 py-1 text-xs font-medium text-red-500 border border-red-200 rounded hover:bg-red-50 dark:border-red-500/30"
                                                     onclick="confirmDelete('deleteUserForm{{ $user->id }}', '{{ addslashes($user->name) }}')">
                                                     Delete
-                                                </button>
+                                                </button> --}}
                                             </div>
                                         </td>
                                     </tr>
