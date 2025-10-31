@@ -28,6 +28,15 @@ class DeliveryTimeSlot extends Model
         ];
     }
 
+    public function getWindowStartAttribute($value)
+    {
+        return optional($value ? \Carbon\Carbon::parse($value) : null)->format('H:i');
+    }
+
+    public function getWindowEndAttribute($value)
+    {
+        return optional($value ? \Carbon\Carbon::parse($value) : null)->format('H:i');
+    }
     /**
      * Get all orders for this delivery time slot.
      */

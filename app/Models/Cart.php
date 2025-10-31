@@ -22,7 +22,10 @@ class Cart extends Model
             'added_at' => 'datetime',
         ];
     }
-
+    public function getAddedAtAttribute($value)
+    {
+        return optional($value ? \Carbon\Carbon::parse($value) : null)->toDayDateTimeString();
+    }
     /**
      * Get the user that owns the cart item.
      */

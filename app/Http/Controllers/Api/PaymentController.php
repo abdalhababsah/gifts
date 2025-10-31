@@ -8,11 +8,11 @@ use App\Http\Requests\Api\PaymentConfirmRequest;
 use App\Http\Requests\Api\PaymentIntentRequest;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Services\Api\AppliedDiscountStore;
 use App\Services\Api\CartService;
 use App\Services\Api\OrderPlacementService;
 use App\Services\Api\PaymentGatewayService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -22,16 +22,18 @@ class PaymentController extends ApiController
         private CartService $cartService,
         private PaymentGatewayService $gateway,
         private OrderPlacementService $orderPlacement,
+        private AppliedDiscountStore $appliedDiscounts,
     ) {}
 
     /**
      * Create a payment session for the mobile SDK
      */
+    // ...
     public function intent(PaymentIntentRequest $request): JsonResponse
     {
         $user = $request->user();
-
-        // Validate cart items
+    
+        // 1) Validate cart items (server is the source of truth)
         $cart = $this->cartService->getCartItems($request);
         if (empty($cart['cart_items'])) {
             return response()->json([
@@ -39,104 +41,133 @@ class PaymentController extends ApiController
                 'message' => 'Your cart is empty',
             ], 422);
         }
-
-        // Calculate total
-        $total = (float)($cart['total_amount'] ?? 0.0);
+    
+        // 2) Compute subtotal from cart and apply any saved single discount BEFORE session
+        $subtotal = (float) ($cart['total_amount'] ?? 0.0); // cart returns subtotal here
+        $payable  = $subtotal;                              // default payable = subtotal
+    
+        $discountPayload = null; // ['code','type','value','amount'] if valid
+    
+        if ($saved = $this->appliedDiscounts->get($user->id)) {
+            if (!empty($saved['code'])) {
+                $eval = $this->orderPlacement->evaluateDiscount($saved['code'], $subtotal, $user->id);
+                if ($eval['ok']) {
+                    $discountPayload = $eval['discount'];
+                    $payable = (float) $eval['total']; // discounted total
+                } else {
+                    // invalid/expired/limits not met -> forget saved code
+                    $this->appliedDiscounts->forget($user->id);
+                }
+            }
+        }
+    
+        // 3) Prevent duplicates: reuse pending order with the SAME discounted total
         $payload = $request->validated();
-
-        // Check for existing pending order with same details to prevent duplicates
+    
         $existingOrder = Order::where('user_id', $user->id)
             ->where('status', 'pending')
-            ->where('total_amount', $total)
+            ->where('total_amount', $payable) // must match discounted total
             ->where('shipping_address', $payload['shipping_address'])
-            ->where('city_id', (int)$payload['city_id'])
+            ->where('city_id', (int) $payload['city_id'])
             ->where('delivery_date', $payload['delivery_date'])
-            ->where('delivery_time_slot_id', (int)$payload['delivery_time_slot_id'])
-            ->whereHas('payment', function($query) {
-                $query->where('status', 'initiated');
-            })
-            ->with('payment')
+            ->where('delivery_time_slot_id', (int) $payload['delivery_time_slot_id'])
+            ->whereHas('payment', fn ($q) => $q->where('status', 'initiated'))
+            ->with(['payment', 'discount.discountCode'])
             ->first();
-
+    
         if ($existingOrder && $existingOrder->payment) {
-            // Return existing session instead of creating new one
             return response()->json([
                 'success' => true,
                 'message' => 'Using existing payment session',
                 'data' => [
-                    'order_id' => $existingOrder->id,
+                    'order_id'   => $existingOrder->id,
                     'payment_id' => $existingOrder->payment->id,
-                    'amount' => (float)$existingOrder->payment->amount,
-                    'currency' => $existingOrder->payment->currency,
+                    'amount'     => (float) $existingOrder->payment->amount, // already discounted
+                    'currency'   => $existingOrder->payment->currency,
                     'session_id' => $existingOrder->payment->session_id,
                 ],
             ], 200);
         }
-
-        // Create new order and payment
+    
+        // 4) Create order (total = discounted), persist ONE discount, create payment (discounted), create session
         try {
-            return DB::transaction(function () use ($user, $payload, $total, $cart) {
-                // Create pending order
+            return DB::transaction(function () use ($user, $payload, $payable, $cart, $discountPayload) {
+                // Create pending order with the final (discounted) total
                 $order = Order::create([
-                    'user_id' => $user->id,
-                    'status' => 'pending',
-                    'payment_method' => 'card',
-                    'total_amount' => $total,
-                    'shipping_address' => $payload['shipping_address'],
-                    'city_id' => (int)$payload['city_id'],
-                    'delivery_date' => $payload['delivery_date'],
-                    'delivery_time_slot_id' => (int)$payload['delivery_time_slot_id'],
-                    'is_gift' => $payload['is_gift'] ?? false,
-                    'location_description' => $payload['location_description'] ?? null,
-                    'extra_notes' => $payload['extra_notes'] ?? null,
+                    'user_id'               => $user->id,
+                    'status'                => 'pending',
+                    'payment_method'        => 'card',
+                    'total_amount'          => $payable, // discounted total
+                    'shipping_address'      => $payload['shipping_address'],
+                    'city_id'               => (int) $payload['city_id'],
+                    'delivery_date'         => $payload['delivery_date'],
+                    'delivery_time_slot_id' => (int) $payload['delivery_time_slot_id'],
+                    'is_gift'               => $payload['is_gift'] ?? false,
+                    'location_description'  => $payload['location_description'] ?? null,
+                    'extra_notes'           => $payload['extra_notes'] ?? null,
                 ]);
-
-                // Create payment record
+    
+                // Persist exactly ONE discount row if present
+                if ($discountPayload) {
+                    $discountCodeId = \App\Models\DiscountCode::where('code', $discountPayload['code'])->value('id');
+                    if ($discountCodeId) {
+                        \App\Models\OrderDiscount::updateOrCreate(
+                            ['order_id' => $order->id],
+                            [
+                                'discount_code_id' => (int) $discountCodeId,
+                                'applied_value'    => (float) $discountPayload['amount'],
+                            ]
+                        );
+                    }
+                }
+    
+                // Create payment with the discounted amount
                 $payment = Payment::create([
-                    'order_id' => $order->id,
-                    'provider' => config('payments.provider', 'mpgs'),
-                    'amount' => $total,
-                    'currency' => config('payments.currency', 'JOD'),
-                    'status' => 'initiated',
+                    'order_id'  => $order->id,
+                    'provider'  => config('payments.provider', 'mpgs'),
+                    'amount'    => $payable, // discounted
+                    'currency'  => config('payments.currency', 'JOD'),
+                    'status'    => 'initiated',
                     'raw_snapshot' => ['cart' => $cart],
                 ]);
-
-                // Create payment session via gateway
+    
+                // Create gateway session
                 $session = $this->gateway->createSession($payment);
-
+    
                 return response()->json([
                     'success' => true,
                     'message' => 'Payment session created',
                     'data' => [
-                        'order_id' => $order->id,
+                        'order_id'   => $order->id,
                         'payment_id' => $payment->id,
-                        'amount' => (float)$payment->amount,
-                        'currency' => $payment->currency,
+                        'amount'     => (float) $payment->amount, // discounted
+                        'currency'   => $payment->currency,
                         'session_id' => $session['session_id'],
                     ],
                 ], 201);
             });
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Log::error('Payment session creation failed', [
-                'error' => $e->getMessage(),
+                'error'   => $e->getMessage(),
                 'user_id' => $user->id,
-                'cart' => $cart
+                'cart'    => $cart,
             ]);
+    
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create payment session: ' . $e->getMessage(),
             ], 500);
         }
     }
-
+    
     /**
      * Confirm payment after mobile SDK has processed card details
      */
     public function confirm(PaymentConfirmRequest $request): JsonResponse
     {
         $user = $request->user();
-        $payment = Payment::with('order')->findOrFail((int)$request->validated('payment_id'));
-
+        $payment = Payment::with('order')->findOrFail((int) $request->validated('payment_id'));
+$payment->status = 'succeeded';
         // Security check
         if ($payment->order?->user_id !== $user->id) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
@@ -145,6 +176,7 @@ class PaymentController extends ApiController
         // Already processed?
         if ($payment->status === 'succeeded') {
             $summary = $this->orderPlacement->finalizePaidOrder($payment);
+
             return response()->json([
                 'success' => true,
                 'message' => 'Payment already confirmed',
@@ -153,7 +185,7 @@ class PaymentController extends ApiController
         }
 
         // Check if payment is still in valid state
-        if (!in_array($payment->status, ['initiated', 'pending'])) {
+        if (! in_array($payment->status, ['initiated', 'pending'])) {
             return response()->json([
                 'success' => false,
                 'message' => 'Payment is no longer valid for processing',
@@ -162,13 +194,13 @@ class PaymentController extends ApiController
 
         // Complete payment with session updated by mobile SDK
         $sessionId = $request->validated('session_id');
-        
+
         try {
             return DB::transaction(function () use ($payment, $sessionId) {
                 // Process payment with session
                 $payResult = $this->gateway->payWithSession($payment, $sessionId);
-                
-                if (!$payResult['ok']) {
+
+                if (! $payResult['ok']) {
                     return response()->json([
                         'success' => false,
                         'message' => $payResult['message'] ?? 'Payment failed',
@@ -202,11 +234,12 @@ class PaymentController extends ApiController
             Log::error('Payment confirmation failed', [
                 'error' => $e->getMessage(),
                 'payment_id' => $payment->id,
-                'order_id' => $payment->order_id
+                'order_id' => $payment->order_id,
             ]);
+
             return response()->json([
                 'success' => false,
-                'message' => 'Payment processing failed: ' . $e->getMessage(),
+                'message' => 'Payment processing failed: '.$e->getMessage(),
             ], 500);
         }
     }
