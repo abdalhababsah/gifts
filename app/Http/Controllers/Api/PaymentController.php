@@ -167,7 +167,7 @@ class PaymentController extends ApiController
     {
         $user = $request->user();
         $payment = Payment::with('order')->findOrFail((int) $request->validated('payment_id'));
-$payment->status = 'succeeded';
+// $payment->status = 'succeeded';
         // Security check
         if ($payment->order?->user_id !== $user->id) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
