@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>GiftShop - Perfect Gifts for Every Occasion</title>
+    <title>floreegift - Perfect Gifts for Every Occasion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta content="GiftShop Mobile App - Find Perfect Gifts" name="description">
-    <meta content="GiftShop" name="author">
+    <meta content="floreegift Mobile App - Find Perfect Gifts" name="description">
+    <meta content="floreegift" name="author">
     <!-- App favicon -->
     <link rel="shortcut icon" href="./assets/images/favicon.ico">
     
@@ -61,7 +61,7 @@
                             <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
                         </svg>
                     </div>
-                    <span class="text-xl font-bold text-slate-800 dark:text-zink-50">GiftShop</span>
+                    <span class="text-xl font-bold text-slate-800 dark:text-zink-50">floreegift</span>
                 </a>
             </div>
             <div class="mx-auto">
@@ -92,7 +92,7 @@
                     <h1 class="mb-8 text-4xl md:text-5xl !leading-relaxed font-bold text-slate-800 dark:text-zink-50">
                         Find Perfect Gifts with 
                         <span class="relative inline-block px-2 mx-2 before:block before:absolute before:-inset-1 before:-skew-y-6 before:bg-sky-50 dark:before:bg-sky-500/20 before:rounded-md before:backdrop-blur-xl">
-                            <span class="relative text-sky-500">GiftShop</span>
+                            <span class="relative text-sky-500">floreegift</span>
                         </span>
                         Mobile App
                     </h1>
@@ -139,7 +139,7 @@
                                                     <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
                                                 </svg>
                                             </div>
-                                            <h3 class="text-xl font-bold text-slate-800">GiftShop</h3>
+                                            <h3 class="text-xl font-bold text-slate-800">floreegift</h3>
                                             <p class="text-slate-500 text-sm">Perfect gifts await</p>
                                         </div>
                                         
@@ -277,7 +277,7 @@
                 <h1 class="mb-6 leading-normal capitalize text-slate-800 dark:text-zink-50">
                     Why Choose 
                     <span class="relative inline-block px-2 mx-2 before:block before:absolute before:-inset-1 before:-skew-y-6 before:bg-sky-50 dark:before:bg-sky-500/20 before:rounded-md before:backdrop-blur-xl">
-                        <span class="relative text-sky-500">GiftShop</span>
+                        <span class="relative text-sky-500">floreegift</span>
                     </span>
                     Mobile App
                 </h1>
@@ -440,7 +440,7 @@
                                 <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
                             </svg>
                         </div>
-                        <h5 class="text-xl font-bold text-slate-50 dark:text-zink-50">GiftShop</h5>
+                        <h5 class="text-xl font-bold text-slate-50 dark:text-zink-50">floreegift</h5>
                     </div>
                     <p class="text-slate-400 dark:text-zink-200 mb-6">
                         Making every moment special with perfect gifts for every occasion.
@@ -537,7 +537,7 @@
                    </form>
 
                    <p class="mb-1 text-slate-500 dark:text-zink-200 text-15">Support Email</p>
-                   <h5 class="text-lg !font-normal text-slate-200 dark:text-zink-50 mb-4">support@giftshop.com</h5>
+                   <h5 class="text-lg !font-normal text-slate-200 dark:text-zink-50 mb-4">support@floreegift.com</h5>
 
                    <p class="mb-1 text-slate-500 dark:text-zink-200 text-15">Contact Us</p>
                    <h5 class="text-lg !font-normal text-slate-200 dark:text-zink-50">+1 (555) 123-4567</h5>
@@ -546,7 +546,7 @@
 
            <div class="mt-12 text-center text-slate-400 dark:text-zink-200 text-16">
                <p>
-                   <script>document.write(new Date().getFullYear())</script> © GiftShop. Made with ❤️ for gift lovers everywhere.
+                   <script>document.write(new Date().getFullYear())</script> © floreegift. Made with ❤️ for gift lovers everywhere.
                </p>
            </div>
        </div>
