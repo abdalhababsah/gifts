@@ -64,8 +64,8 @@ class DashboardService
             ->sum('amount');
 
         // Calculate percentage change
-        $revenueGrowth = $lastMonthRevenue > 0 
-            ? (($thisMonthRevenue - $lastMonthRevenue) / $lastMonthRevenue) * 100 
+        $revenueGrowth = $lastMonthRevenue > 0
+            ? (($thisMonthRevenue - $lastMonthRevenue) / $lastMonthRevenue) * 100
             : 0;
 
         return [
@@ -84,10 +84,10 @@ class DashboardService
     private function getRevenueStats(): array
     {
         $currentMonth = Carbon::now()->startOfMonth();
-        
+
         // Monthly goal (you can make this configurable)
         $monthlyGoal = 25000;
-        
+
         $thisMonthRevenue = Payment::where('status', 'succeeded')
             ->where('created_at', '>=', $currentMonth)
             ->sum('amount');
@@ -108,9 +108,9 @@ class DashboardService
     {
         $delivered = Order::where('delivery_status', 'delivered')->count();
         $processing = Order::whereIn('delivery_status', ['confirmed', 'processing', 'shipped'])->count();
-        
+
         $total = $delivered + $processing;
-        
+
         return [
             'delivered' => $delivered,
             'processing' => $processing,

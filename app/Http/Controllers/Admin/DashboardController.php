@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Services\Admin\DashboardService;
 use Illuminate\Http\Request;
@@ -12,7 +11,8 @@ class DashboardController extends Controller
 {
     public function __construct(
         private DashboardService $dashboardService
-    ) {}
+    ) {
+    }
 
     /**
      * Show the admin dashboard with comprehensive statistics
@@ -21,12 +21,12 @@ class DashboardController extends Controller
     {
         try {
             $dashboardData = $this->dashboardService->getDashboardStats();
-            
+
             return view('admin.dashboard', compact('dashboardData'));
         } catch (\Exception $e) {
             // Log the error
             \Log::error('Dashboard data loading failed: ' . $e->getMessage());
-            
+
             // Return view with empty data structure
             $dashboardData = [
                 'overview' => [
@@ -65,7 +65,7 @@ class DashboardController extends Controller
                     'revenue' => [],
                 ],
             ];
-            
+
             return view('admin.dashboard', compact('dashboardData'));
         }
     }
@@ -77,7 +77,7 @@ class DashboardController extends Controller
     {
         try {
             $dashboardData = $this->dashboardService->getDashboardStats();
-            
+
             return response()->json([
                 'success' => true,
                 'data' => $dashboardData
